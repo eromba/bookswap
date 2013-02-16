@@ -1,7 +1,7 @@
   
   <footer class="offset4">
     <a href="http://www.northwestern.edu">
-      <img id="nu-logo" alt="Northwestern University" src="<?echo BASE;?>images/NU_Logo_black_small.png">
+      <img id="nu-logo" alt="Northwestern University" src="<?echo BASE;?>img/NU_Logo_black_small.png">
     </a>
   </footer>
 </div>

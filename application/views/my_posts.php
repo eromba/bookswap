@@ -14,7 +14,7 @@
       	<div class="book">
     	    <h3 class="title"><?echo($book->title);?></h3>
     		<div class="cover">
-            	<img src="<?echo BASE;?>images/book-covers/<?echo($book->isbn);?>.jpg" class="img-polaroid" alt="" />
+            	<img src="<?echo BASE;?>img/book-covers/<?echo($book->isbn);?>.jpg" class="img-polaroid" alt="" />
           	</div>
 			<div class="info">
 	            <div class="book-info span3">

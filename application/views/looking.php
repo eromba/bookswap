@@ -9,16 +9,16 @@
       <span class="offset4 span5"><?echo($results_count);?> match for your search: "<?echo($q);?>"</span>
       <?}?>
   </div>
-  <?$covernaurl = BASE . "images/book-covers/covernotavailable.jpg";?>
+  <?$covernaurl = BASE . "img/covernotavailable.jpg";?>
   <div class = "row"  id="results">
     <? foreach ($books as $book){?>
       <div class = "result span8 offset2">
         <div class="book">
           <h3 class="title"><?echo($book->title);?></h3>
           <div class="cover">
-              <?$coverurl = BASE . "images/book-covers/". $book->isbn . ".jpg";
+              <?$coverurl = BASE . "img/book-covers/". $book->isbn . ".jpg";
               try{
-                $coverfile = filesize(getcwd() . "/images/book-covers/". $book->isbn . ".jpg");
+                $coverfile = filesize(getcwd() . "/img/book-covers/". $book->isbn . ".jpg");
               }catch (Exception $e) {
                 $coverfile=0;
               }  

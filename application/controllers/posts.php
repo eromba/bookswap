@@ -44,7 +44,7 @@ class Posts extends CI_Controller {
 			return true;
 		}
 		$curr = getcwd();
-		$imgFile = $curr."/images/book-covers/".$book->isbn.".jpg";
+		$imgFile = $curr."/img/book-covers/".$book->isbn.".jpg";
 		if (!(file_exists($imgFile))){
 			return true;
 		}
@@ -74,7 +74,7 @@ class Posts extends CI_Controller {
 					$imgURL = $result->Items->Item->MediumImage->URL;
 					$title = $result->Items->Item->ItemAttributes->Title;
 					$curr = getcwd();
-					$imgFile = $curr."/images/book-covers/".$book->isbn.".jpg";
+					$imgFile = $curr."/img/book-covers/".$book->isbn.".jpg";
 					//echo filesize($imgFile);
 					if ((!(file_exists($imgFile)))||(filesize($imgFile)==0)){
 						ini_set('allow_url_fopen', 1);
