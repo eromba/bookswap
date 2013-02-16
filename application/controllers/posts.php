@@ -4,7 +4,6 @@ class Posts extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		define('BASE','https://bookswap.northwestern.edu/dev/');
 		//echo('controller start<br/>');
 		$this->load->model('post_model');
 		$this->load->model('account_model');
@@ -57,7 +56,7 @@ class Posts extends CI_Controller {
 		$data['seller'] = $this->seller;
 		$q = urldecode($q);
 		if($this->input->post('q')!=NULL){
-			header( 'Location: https://bookswap.northwestern.edu/dev/index.php/looking/'.$this->input->post('q') ) ;
+			header('Location: ' . base_url() . 'looking/' . $this->input->post('q'));
 		}
 		$data['q'] = $q;
 		$data['books'] = $this->results($q);
@@ -212,7 +211,7 @@ class Posts extends CI_Controller {
 	}
 	public function logout(){
 		$this->session->sess_destroy();
-		redirect(BASE.'index.php');
+		redirect(base_url().'index.php');
 	}
 	public function my_account(){
 		if($this->session->userdata('bookswap_user')){

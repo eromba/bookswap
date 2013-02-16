@@ -13,7 +13,7 @@ window.onload = function(){
 </script>
 <div class="row">
   <header class="span8 offset3">
-    <img id="front-logo" src="<?php echo BASE;?>img/bookswap-logo.png" alt="BookSwap 2.0" />
+    <img id="front-logo" src="<?php echo base_url();?>img/bookswap-logo.png" alt="BookSwap 2.0" />
   </header>
 </div>
 <div class="row">
