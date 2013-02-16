@@ -5,7 +5,7 @@
     </a>
   </footer>
 </div>
-  <script type="text/javascript" src="<?echo BASE;?>js/jquery-1.8.2.min.js"></script>
+  <script type="text/javascript" src="<?echo BASE;?>js/jquery-1.9.1.min.js"></script>
   <script type="text/javascript" src="<?echo BASE;?>js/custom.js"></script>
   <script type="text/javascript" src="<?echo BASE;?>js/bootstrap.js"></script>
 </div>
