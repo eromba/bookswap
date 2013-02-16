@@ -1,8 +1,8 @@
 <div id = "postform">
-	<?
+	<?php
 		echo form_open('post_book','',array('submit'=>true));
 	?>
-	<div id = "priceInputDiv"><?
+	<div id = "priceInputDiv"><?php
 		$options = array (
 		  'name'  => 'price',
 		'id'    => 'price'
@@ -12,7 +12,7 @@
 		echo form_label('Price:  ', 'price');
 		echo form_input($options);
 	?></div>
-	<div id = "conditionInputDiv"><?
+	<div id = "conditionInputDiv"><?php
 		echo form_label('Condition:  ', 'condition');
 		$options = array(
 		                  'Very Good'  => 'Very Good',
@@ -22,7 +22,7 @@
 		                );
 		echo form_dropdown('condition', $options, 'Good');
 	?></div>
-	<div id = "notesInputDiv"><?
+	<div id = "notesInputDiv"><?php
 		$options = array (
 		  'name'  => 'notes',
 		'id'    => 'notes',
@@ -32,7 +32,7 @@
 		echo form_label('Notes:  ', 'notes');
 		echo form_textarea($options);
 	?></div>
-	<div id = "editionInputDiv"><?
+	<div id = "editionInputDiv"><?php
 
 		echo form_label('Edition:  ', 'edition');
 		if (isset($book)){
@@ -50,7 +50,7 @@
 		echo form_input($options);
 		// Close the form.
 	?></div>
-	<div id = "hiddenFields"><?
+	<div id = "hiddenFields"><?php
 		if (isset($book)){
 			$bid = $book->id;
 		}else{
@@ -58,7 +58,7 @@
 		}
 		echo form_hidden("bid",$bid);
 	?></div>
-	<div id="submitInputDiv"><? 
+	<div id="submitInputDiv"><?php  
 	echo form_submit('submit', 'Submit');
 	echo form_close();
 	?></div>

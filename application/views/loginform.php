@@ -1,4 +1,4 @@
-<?
+<?php
 	echo form_open('login',array('class'=> 'navbar-form pull-right','id'=>'login-form'),array('login'=>"TRUE",'current_page'=> current_url()));
 
 	$options = array (

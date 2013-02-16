@@ -1,5 +1,4 @@
-
-<?
+<?php
 	echo form_open('looking',array('class'=>"navbar-form pull-left"),array('submit'=>true));
 	$options = array (
 		'name'=>'q',

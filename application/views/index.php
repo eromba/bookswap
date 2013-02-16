@@ -13,12 +13,12 @@ window.onload = function(){
 </script>
 <div class="row">
   <header class="span8 offset3">
-    <img id="front-logo" src="<?echo BASE;?>img/bookswap-logo.png" alt="BookSwap 2.0" />
+    <img id="front-logo" src="<?php echo BASE;?>img/bookswap-logo.png" alt="BookSwap 2.0" />
   </header>
 </div>
 <div class="row">
   <div id="search-box" class="span7 offset3">
-      <?
+      <?php
         echo form_open('looking',array('class'=>""),array('submit'=>true));
         $options = array (
           'size'=>'14',
@@ -36,7 +36,7 @@ window.onload = function(){
         'name'=>'search',
         'value'=>'Search'
         );
-      ?><a id="howto-icon" href="#howto-modal" role="button" data-toggle="modal"> <i class="icon-info-sign"></i> </a><?
+      ?><a id="howto-icon" href="#howto-modal" role="button" data-toggle="modal"> <i class="icon-info-sign"></i> </a><?php
       echo form_submit($options);
       echo form_close();
     ?>
