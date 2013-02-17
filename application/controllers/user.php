@@ -3,7 +3,7 @@
 class User extends BS_Controller {
 
   public function login() {
-    $result = $this->post_model->login();
+    $result = $this->authenticate();
     $this->session->set_userdata('last_page', $result['last_page']);
     //save last page, just add userdata to session and go back to last page. If failed, go to failure page and keep last page saved for when they succeed or hit back.
     if ($result['logged_in']) {
@@ -17,6 +17,34 @@ class User extends BS_Controller {
   public function logout() {
     $this->session->sess_destroy();
     redirect(base_url() . 'index.php');
+  }
+
+  public function authenticate(){
+    $my_result = array(
+      'logged_in' => FALSE,
+      'last_page' => $this->input->post('current_page'),
+    );
+    if ($this->input->post('login')) {
+      $netid = $this->input->post('username');
+      $my_result['logged_in'] = TRUE;
+      $my_result['userdata'] = $this->get_user($netid);
+      if ($my_result['userdata']) {
+        $my_result['userdata'] = $my_result['userdata'][0];
+      } else {
+        $newuser = array(
+          'netid' => $netid,
+          'name' => 'John Smith',
+          'email' => 'john@example.edu',
+          'first_name' => 'John',
+        );
+        $this->add_user($newuser);
+        $my_result['userdata'] = $this->get_user($netid);
+        if ( ! $my_result['userdata']) {
+          return FALSE;
+        }
+      }
+    }
+    return $my_result;
   }
 
 }

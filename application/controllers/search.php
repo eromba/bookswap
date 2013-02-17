@@ -39,7 +39,7 @@ class Search extends BS_Controller {
     $data['title'] = "Results";
     foreach ($data['books'] as $book) {
       if ($this->need_update($book)) {
-        $result = $this->post_model->get_amazon_from_isbn($book->isbn);
+        $result = $this->book_model->get_amazon_from_isbn($book->isbn);
         if (property_exists($result, "Error"))
           break;
         if (($result != NULL) && ($result->Items->Item != NULL) && ($result->Items->Item->ItemAttributes != NULL) && ($result->Items->Item->ItemAttributes->ListPrice != NULL)) {
@@ -61,7 +61,7 @@ class Search extends BS_Controller {
             curl_exec($ch);
             curl_close($ch);
             fclose($fp);
-            $this->post_model->have_cover($book->isbn);
+            $this->book_model->have_cover($book->isbn);
           }
           $book->amzn_link = "$url";
           if (!($lowestUsedPrice == NULL)) {
@@ -84,9 +84,9 @@ class Search extends BS_Controller {
           }
           if (!($title == NULL)) {
             $book->title = $title;
-            $this->post_model->update_amazon_data($book, true);
+            $this->book_model->update_amazon_data($book, true);
           }
-          $this->post_model->update_amazon_data($book, false);
+          $this->book_model->update_amazon_data($book, false);
         } else {
           //echo($book->isbn);
           //var_dump($result);
@@ -98,7 +98,7 @@ class Search extends BS_Controller {
         $book->posts = $this->post_model->get_posts_by_bid($book->id);
         //var_dump($book->posts);
         foreach ($book->posts as $post) {
-          $post->sellerdata = $this->account_model->get_user($post->seller);
+          $post->sellerdata = $this->user_model->get_user($post->seller);
         }
 
         $book->from = $this->min($book->id);
@@ -113,26 +113,26 @@ class Search extends BS_Controller {
   }
 
   public function min($q) {
-    return $this->post_model->get_min_price($q);
+    return $this->book_model->get_min_price($q);
   }
 
   public function isbn($q) {
-    return $this->post_model->get_books_by_isbn($q);
+    return $this->book_model->get_books_by_isbn($q);
   }
 
   public function bid($q) {
-    return $this->post_model->get_books_by_id($q);
+    return $this->book_model->get_books_by_id($q);
   }
 
   public function fetch_results($q) {
     if (intval($q) > 999) {
-      $results = $this->post_model->get_books_by_isbn($q);
+      $results = $this->book_model->get_books_by_isbn($q);
     } else {
-      $results = $this->post_model->get_books_by_all($q);
+      $results = $this->book_model->get_books_by_all($q);
     }
 
     if ($q == NULL) {
-      $results = $this->post_model->get_books();
+      $results = $this->book_model->get_books();
     }
     return $results;
   }
