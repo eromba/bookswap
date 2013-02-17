@@ -19,30 +19,4 @@ class User extends BS_Controller {
     redirect(base_url() . 'index.php');
   }
 
-  public function my_account() {
-    if ($this->session->userdata('bookswap_user')) {
-      $data['userdata'] = $this->session->userdata('bookswap_user');
-      $data['title'] = 'Account Settings';
-      $this->load->view('header', $data);
-      $this->load->view('my_account', $data);
-      $this->load->view('footer', $data);
-    } else {
-      echo('please log in');
-    }
-  }
-
-  public function update_account() {
-    if ($this->account_model->update_user($this->session->userdata('bookswap_user'))) {
-      
-    } else {
-
-    }
-    $netid = $this->session->userdata('bookswap_user');
-    $netid = $netid['netid'];
-    $data['userdata'] = $this->post_model->get_user($netid);
-    $this->load->view('header', $data);
-    $this->load->view('my_account', $data);
-    $this->load->view('footer', $data);
-  }
-
 }

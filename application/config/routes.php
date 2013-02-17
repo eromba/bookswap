@@ -55,8 +55,6 @@ $route['myposts/remove'] = 'posts/remove_post';
 // User Account
 $route['login'] = 'user/login';
 $route['logout'] = 'user/logout';
-$route['myaccount'] = 'user/my_account';
-$route['updateaccount'] = 'user/update_account';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
