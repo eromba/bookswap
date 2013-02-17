@@ -50,7 +50,7 @@ $route['search'] = 'search/results';
 $route['post_book'] = 'posts/post_book';
 $route['update_post'] = 'posts/update_post';
 $route['myposts'] = 'posts/my_posts';
-$route['myposts/remove'] = 'posts/remove_post';
+$route['myposts/deactivate'] = 'posts/deactivate_post';
 
 // User Account
 $route['login'] = 'user/login';

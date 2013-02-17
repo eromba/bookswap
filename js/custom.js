@@ -1,5 +1,5 @@
-function delete_post(id){
-	var jqxhr = $.post("myposts/remove", { post_id: id})
+function deactivate_post(id){
+	var jqxhr = $.post("myposts/deactivate", { post_id: id})
 	.done(function(data) { 
 		if(data!="Error"){
 			$("#postid_"+data).fadeOut("normal", function() {
@@ -9,10 +9,10 @@ function delete_post(id){
 	})
 	.fail(function() { alert("error"); })
 }
-$(".post-del-btn").click(function(event) {
+$(".post-deactivate-btn").click(function(event) {
 	idstring = $(this).parent().attr("id");
 	idstring = idstring.substring(7);
 });
-$("#delete-confirm-button").click(function(event) {
-	delete_post(idstring);
+$("#deactivate-confirm-button").click(function(event) {
+	deactivate_post(idstring);
 });

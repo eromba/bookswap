@@ -41,7 +41,7 @@ class Posts extends BS_Controller {
     $this->load->view('footer', $data);
   }
 
-  public function remove_post() {
+  public function deactivate_post() {
     $pid = $this->input->post('post_id');
     $post = $this->post_model->get_posts(array('pid' => $pid));
     // Verify that the post exists
@@ -49,7 +49,7 @@ class Posts extends BS_Controller {
       $user = $this->session->userdata('bookswap_user');
       // Verify that the current user owns this post
       if ($post->uid == $user->uid) {
-        echo $this->post_model->remove_post($pid);
+        echo $this->post_model->deactivate_post($pid);
       }
     }
   }

@@ -14,7 +14,7 @@
           $book = $post->book;
       ?>
         <div id = "postid_<?php echo $post->pid;?>" class="result span8 offset2">
-        	<button class="btn-danger btn-mini btn post-del-btn" href="#deleteconfirm-modal" role="button" data-toggle="modal"> <i class="icon-remove-sign"></i> </button>
+        	<button class="btn-danger btn-mini btn post-deactivate-btn" href="#deactivate-confirm-modal" role="button" data-toggle="modal"> <i class="icon-remove-sign"></i> </button>
       	<div class="book">
     	    <h3 class="title"><?php echo($book->title);?></h3>
     		<div class="cover">
@@ -54,17 +54,17 @@
 
 
 <!-- Modal -->
-<div id="deleteconfirm-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="deactivate-confirm-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Confirm Deletion</h3>
+    <h3 id="myModalLabel">Confirm Deactivation</h3>
   </div>
   <div class="modal-body">
-    <p>Are you sure you want to delete this posting?</p>
+    <p>Are you sure you want to deactivate this posting?</p>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
-    <button id = "delete-confirm-button" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Yes</button>
+    <button id = "deactivate-confirm-button" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Yes</button>
   </div>
 </div>
 

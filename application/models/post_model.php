@@ -87,7 +87,7 @@ class Post_model extends CI_Model {
     return $this->db->affected_rows();
   }
 
-  public function remove_post() {
+  public function deactivate_post($pid) {
     // A pid must be specified to indicate which post to deactivate.
     if ( ! isset($pid)) {
       return false;
