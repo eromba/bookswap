@@ -33,7 +33,6 @@ class User extends BS_Controller {
       } else {
         $newuser = array(
           'netid' => $netid,
-          'name' => 'John Smith',
           'email' => 'john@example.edu',
           'first_name' => 'John',
         );
