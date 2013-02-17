@@ -101,7 +101,7 @@ class Search extends BS_Controller {
           $post->sellerdata = $this->user_model->get_user($post->seller);
         }
 
-        $book->from = $this->min($book->id);
+        $book->from = $this->book_model->get_min_price($book->id);
       } else {
         $book->posts = array();
       }
@@ -110,18 +110,6 @@ class Search extends BS_Controller {
     $this->load->view('header', $data);
     $this->load->view('search_results', $data);
     $this->load->view('footer', $data);
-  }
-
-  public function min($q) {
-    return $this->book_model->get_min_price($q);
-  }
-
-  public function isbn($q) {
-    return $this->book_model->get_books_by_isbn($q);
-  }
-
-  public function bid($q) {
-    return $this->book_model->get_books_by_id($q);
   }
 
   public function fetch_results($q) {
