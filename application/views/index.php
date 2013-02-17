@@ -19,7 +19,7 @@ window.onload = function(){
 <div class="row">
   <div id="search-box" class="span7 offset3">
       <?php
-        echo form_open('looking',array('class'=>""),array('submit'=>true));
+        echo form_open('search',array('class'=>""),array('submit'=>true));
         $options = array (
           'size'=>'14',
           'name'=>'q',

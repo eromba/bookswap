@@ -32,7 +32,7 @@ class Search extends BS_Controller {
     $data['seller'] = $this->seller;
     $q = urldecode($q);
     if ($this->input->post('q') != NULL) {
-      header('Location: ' . base_url() . 'looking/' . $this->input->post('q'));
+      header('Location: ' . base_url() . 'search/' . $this->input->post('q'));
     }
     $data['q'] = $q;
     $data['books'] = $this->fetch_results($q);
@@ -108,7 +108,7 @@ class Search extends BS_Controller {
     }
     //var_dump($data['books']);
     $this->load->view('header', $data);
-    $this->load->view('looking', $data);
+    $this->load->view('search_results', $data);
     $this->load->view('footer', $data);
   }
 
