@@ -29,8 +29,14 @@ class Posts extends BS_Controller {
   }
 
   public function update_post() {
+    $this->post_model->update_post(array(
+        'pid' => $this->input->post('pid'),
+        'price' => $this->input->post('price'),
+        'notes' => $this->input->post('notes'),
+        'edition' => $this->input->post('edition'),
+        'condition' => $this->input->post('condition'),
+    ));
     $data['title'] = 'Updated';
-    $this->post_model->update_post();
     $this->load->view('header', $data);
     $this->load->view('footer', $data);
   }

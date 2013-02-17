@@ -57,13 +57,34 @@ class Post_model extends CI_Model {
     }
   }
 
-  public function update_post() {
-    $this->db->where('pid', $this->input->post('pid'));
-    $this->db->set('price', $this->input->post('price'));
-    $this->db->set('notes', $this->input->post('notes'));
-    $this->db->set('edition', $this->input->post('edition'));
-    $this->db->set('condition', $this->input->post('condition'));
+  /**
+   * Updates a post in the database.
+   *
+   * At minimum, the $options array must specify the pid of the post to update.
+   *
+   * @param array $options Array of columns => values to be saved to the database
+   * @return int affected_rows() Number of rows updated, or false on error
+   */
+  public function update_post($options = array()) {
+    // A pid must be specified to indicate which post to update.
+    if ( ! isset($options['pid'])) {
+      return false;
+    }
+    $this->db->where('pid', $options['pid']);
+
+    // Add updated values to the query.
+    $validColumns = array('price', 'notes', 'edition', 'condition');
+    foreach ($validColumns as $column) {
+      if (isset($options[$column])) {
+        $this->db->set($column, $options[$column]);
+      }
+    }
+
     $this->db->update('posts');
+
+    // Return the number of rows updated,
+    // or false if the row could not be inserted.
+    return $this->db->affected_rows();
   }
 
   public function remove_post() {
