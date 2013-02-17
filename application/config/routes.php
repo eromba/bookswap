@@ -38,19 +38,25 @@
 |
 */
 
-$route['default_controller'] = "posts";
-$route['looking/(:any)'] = 'posts/looking/$1';
-$route['looking'] = 'posts/looking';
-$route['post_book'] = 'posts/post_book';
-$route['update_post'] = 'posts/update_post';
-$route['login'] = 'posts/login';
-$route['myaccount'] = 'posts/my_account';
-$route['myposts'] = 'posts/my_posts';
-$route['myposts/remove'] = 'posts/remove_post';
-$route['updateaccount'] = 'posts/update_account';
-$route['logout'] = 'posts/logout';
+// Reserved CodeIgniter Routes
+$route['default_controller'] = 'search';
 $route['404_override'] = '';
 
+// Search Results
+$route['looking/(:any)'] = 'search/results/$1';
+$route['looking'] = 'search/results';
+
+// User Posts
+$route['post_book'] = 'posts/post_book';
+$route['update_post'] = 'posts/update_post';
+$route['myposts'] = 'posts/my_posts';
+$route['myposts/remove'] = 'posts/remove_post';
+
+// User Account
+$route['login'] = 'user/login';
+$route['logout'] = 'user/logout';
+$route['myaccount'] = 'user/my_account';
+$route['updateaccount'] = 'user/update_account';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
