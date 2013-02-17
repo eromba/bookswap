@@ -2,11 +2,6 @@
 
 class Post_model extends CI_Model {
 
-  public function __construct() {
-    parent::__construct();
-    $this->load->database();
-  }
-
   public function add_post($seller) {
     //https://plus.google.com/+LilPeck/posts/bLm9S75srcm
     $value = strval(strip_tags($this->input->post('price'))); //figured it couldn't hurt to make it string

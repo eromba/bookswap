@@ -24,11 +24,6 @@ class Book_model extends CI_Model {
    */
   private $associate_tag = "";
 
-  public function __construct() {
-    parent::__construct();
-    $this->load->database();
-  }
-
   public function add_book() {
     $seller = $this->input->post('seller');
     $price = $this->input->post('price');
