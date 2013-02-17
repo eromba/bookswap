@@ -11,7 +11,7 @@
     <div class="navbar">
       <div class="navbar-inner">
         <a class="brand" href="<?php echo base_url().'index.php'?>"><i class="icon-home icon-large"></i> </a><span class="brand"><?php echo $title?></span>
-        <?php $this->load->view('searchform');?>
+        <?php $this->load->view('search_form');?>
         <ul class="nav pull-right">
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Hey <?php echo($user->first_name);?> <b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -28,8 +28,8 @@
   <div class="navbar">
     <div class="navbar-inner">
       <a class="brand" href="<?php echo base_url().'index.php'?>"><i class="icon-home icon-large"></i> </a><span class="brand"><?php echo $title?></span>
-      <?php $this->load->view('searchform');?>
-      <?php $this->load->view('loginform');?>
+      <?php $this->load->view('search_form');?>
+      <?php $this->load->view('login_form');?>
       <?php if ($this->session->flashdata('headernotice')){?>
         <div class = "header-notice pull-right">
         <?php echo($this->session->flashdata('headernotice'));?>

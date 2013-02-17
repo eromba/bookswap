@@ -85,7 +85,7 @@
               <button class="btn-success btn" data-toggle="collapse" data-target="#postform-container-<?php echo($formcount);?>">Sell yours</button>
               <span>Have a copy to sell?</span>
               <div id="postform-container-<?php echo($formcount);?>"  class="accordion-body collapse">
-                <?php $this->load->view('postform',array('book'=>$book));?>
+                <?php $this->load->view('post_form',array('book'=>$book));?>
               </div>
             </div>
             <?php $formcount=$formcount+1;?>
