@@ -30,8 +30,8 @@ class Post_model extends CI_Model {
     return $query->result();
   }
 
-  public function get_posts_by_id($id) {
-    $query = $this->db->get_where('posts', array('id' => $id));
+  public function get_posts_by_pid($pid) {
+    $query = $this->db->get_where('posts', array('pid' => $pid));
     return $query->result();
   }
 
@@ -41,7 +41,7 @@ class Post_model extends CI_Model {
   }
 
   public function update_post() {
-    $this->db->where('id', $this->input->post('pid'));
+    $this->db->where('pid', $this->input->post('pid'));
     $this->db->set('price', $this->input->post('price'));
     $this->db->set('notes', $this->input->post('notes'));
     $this->db->set('edition', $this->input->post('edition'));
@@ -52,20 +52,17 @@ class Post_model extends CI_Model {
   public function remove_post() {
     $netid = $this->session->userdata('bookswap_user');
     $netid = $netid->netid;
-    //var_dump($netid);
-    $id = $this->input->post('post_id');
-    $post = $this->get_posts_by_id($id);
+    $pid = $this->input->post('post_id');
+    $post = $this->get_posts_by_pid($pid);
     if ($post) {
       $post = $post[0];
       if ($post->seller == $netid) {
         $this->db->insert('removed_posts', $post);
-        $this->db->delete('posts', array('id' => $id));
-        return $id;
+        $this->db->delete('posts', array('pid' => $pid));
+        return $pid;
       }
-      return "Error";
-    } else {
-      return "Error";
     }
+    return "Error";
   }
 
 }

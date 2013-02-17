@@ -1,15 +1,19 @@
 
 <div id="main">
     <div id="results">
-    	<?php  $my_posts_id_count=0;
-    	if (count($posts)==0){?>
+    	<?php
+      $my_posts_id_count=0;
+    	if (count($posts)==0) {
+      ?>
     		<div class="result span8 offset2">
     			You have no posts! Search for a book to post now.
     		</div>
-    	<?php }
-    	foreach ($posts as $post){
-        $book = $post->book;?>
-        <div id = "postid_<?php echo $post->id;?>" class="result span8 offset2">
+    	<?php
+      } else {
+        foreach ($posts as $post) {
+          $book = $post->book;
+      ?>
+        <div id = "postid_<?php echo $post->pid;?>" class="result span8 offset2">
         	<button class="btn-danger btn-mini btn post-del-btn" href="#deleteconfirm-modal" role="button" data-toggle="modal"> <i class="icon-remove-sign"></i> </button>
       	<div class="book">
     	    <h3 class="title"><?php echo($book->title);?></h3>
@@ -40,7 +44,11 @@
 	        </div>
 	    </div>
 	    </div>
-    	<?php $my_posts_id_count+=1;}?>
+    	<?php
+          $my_posts_id_count+=1;
+        }
+      }
+      ?>
   </div>
 </div>
 
@@ -113,7 +121,7 @@ function populated_post_form($post){
 		// Close the form.
 	?></div>
 	<div id = "hiddenFields"><?php
-		$pid = $post->id;
+		$pid = $post->pid;
 		echo form_hidden("pid",$pid);
 	?></div>
 	<div id="submitInputDiv"><?php  
