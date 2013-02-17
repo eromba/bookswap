@@ -20,7 +20,20 @@ class Posts extends BS_Controller {
 
   public function post_book() {
     $user = $this->get_current_userdata();
-    $this->post_model->add_post($user->uid);
+
+    // Ensure price is an integer.
+    // (e.g. Turn "$10.25" into 10.)
+    $price = intval(preg_replace('/[^\d^\.]/', '', $this->input->post('price')));
+
+    $data = array(
+        'bid' => $this->input->post('bid'),
+        'uid' => $user->uid,
+        'price' => $price,
+        'notes' => $this->input->post('notes'),
+        'edition' => $this->input->post('edition'),
+    );
+    $this->post_model->add_post($data);
+
     $data['title'] = 'Posted';
     $data['notice'] = "Succesfully posted your book!";
     $this->load->view('header', $data);

@@ -6,27 +6,47 @@ class Post_model extends CI_Model {
   const ACTIVE = 1;
   const DEACTIVATED = 0;
 
-  public function add_post($uid) {
-    //https://plus.google.com/+LilPeck/posts/bLm9S75srcm
-    $value = strval(strip_tags($this->input->post('price'))); //figured it couldn't hurt to make it string
-    $myval = htmlentities($value); //important part
-    $price = intval(preg_replace('/[\$\,]/', '', $myval)); //remove $ and comma
-    $notes = $this->input->post('notes');
-    $bid = $this->input->post('bid');
-    $edition = $this->input->post('edition');
-    $data = array(
-        'bid' => $bid,
-        'uid' => $uid,
-        'price' => $price,
-        'notes' => $notes,
-        'edition' => $edition
-    );
-    //var_dump($data);
-    $this->db->insert('posts', $data);
+  /**
+   * Creates a new post in the database.
+   *
+   * At minimum, the $options array must specify values for the following columns:
+   *  - uid
+   *  - bid
+   *  - price
+   *
+   * @param array $options Array of columns => values to be saved to the database
+   * @return int affected_rows() The id of the inserted post, or false on error
+   */
+  public function add_post($options = array()) {
+    // Check for required values.
+    $requiredValues = array('uid', 'bid', 'price');
+    foreach ($requiredValues as $column) {
+      if ( ! isset($options[$column])) {
+        return false;
+      }
+    }
 
-    $this->db->where('id', $bid);
-    $this->db->set('stock', 'stock+1', FALSE);
-    $this->db->update('books');
+    // Add new post values to the query.
+    $qualificationArray = array('uid', 'bid', 'price', 'notes', 'edition');
+    foreach ($qualificationArray as $qualifier) {
+      if (isset($options[$qualifier])) {
+        $this->db->set($qualifier, $options[$qualifier]);
+      }
+    }
+
+    $this->db->insert('posts', $options);
+
+    $pid = $this->db->insert_id();
+    if ($pid) {
+      // Increment the "stock" value for this book.
+      $this->db->where('id', $options['bid']);
+      $this->db->set('stock', 'stock+1', FALSE);
+      $this->db->update('books');
+    }
+
+    // Return the ID of the inserted row,
+    // or false if the row could not be inserted.
+    return $pid;
   }
 
   /**
