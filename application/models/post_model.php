@@ -2,6 +2,10 @@
 
 class Post_model extends CI_Model {
 
+  // Values for "status" column in posts table.
+  const ACTIVE = 1;
+  const DEACTIVATED = 0;
+
   public function add_post($uid) {
     //https://plus.google.com/+LilPeck/posts/bLm9S75srcm
     $value = strval(strip_tags($this->input->post('price'))); //figured it couldn't hurt to make it string
@@ -56,8 +60,9 @@ class Post_model extends CI_Model {
       $post = $post[0];
       $user = $this->session->userdata('bookswap_user');
       if ($post->uid == $user->uid) {
-        $this->db->insert('removed_posts', $post);
-        $this->db->delete('posts', array('pid' => $pid));
+        $this->db->where('pid', $pid);
+        $this->db->set('status', self::DEACTIVATED);
+        $this->db->update('posts');
         return $pid;
       }
     }
