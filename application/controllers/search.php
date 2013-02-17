@@ -95,8 +95,10 @@ class Search extends BS_Controller {
     }
     foreach ($data['books'] as $book) {
       if ($book->stock >= 1) {
-        $book->posts = $this->post_model->get_posts_by_bid($book->id);
-        //var_dump($book->posts);
+        $book->posts = $this->post_model->get_posts(array(
+            'bid' => $book->id,
+            'status' => Post_model::ACTIVE,
+        ));
         foreach ($book->posts as $post) {
           $post->sellerdata = $this->user_model->get_users(array('uid' => $post->uid));
         }

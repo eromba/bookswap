@@ -6,7 +6,7 @@ class Posts extends BS_Controller {
     $user = $this->get_current_userdata();
     if ($user) {
       $data['user'] = $user;
-      $data['posts'] = $this->post_model->get_posts_by_uid($user->uid);
+      $data['posts'] = $this->post_model->get_posts(array('uid' => $user->uid));
       foreach ($data['posts'] as $post) {
         $post->book = $this->book_model->get_books_by_id($post->bid);
         $post->book = $post->book[0];

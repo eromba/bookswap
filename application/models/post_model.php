@@ -29,19 +29,32 @@ class Post_model extends CI_Model {
     $this->db->update('books');
   }
 
-  public function get_posts_by_bid($bid) {
-    $query = $this->db->get_where('posts', array('bid' => $bid));
-    return $query->result();
-  }
+  /**
+   * Retrieves posts from the database.
+   *
+   * @param array $options Array of query conditions (pid, uid, bid)
+   * @return array result() Array of post objects
+   */
+  public function get_posts($options = array()) {
+     // Add conditions to the query.
+    $validColumns = array('pid', 'uid', 'bid', 'status');
+    foreach ($validColumns as $column) {
+      if (isset($options[$column])) {
+        $this->db->where($column, $options[$column]);
+      }
+    }
 
-  public function get_posts_by_pid($pid) {
-    $query = $this->db->get_where('posts', array('pid' => $pid));
-    return $query->result();
-  }
+    $query = $this->db->get('posts');
 
-  public function get_posts_by_uid($uid) {
-    $query = $this->db->get_where('posts', array('uid' => $uid));
-    return $query->result();
+    if (isset($options['pid'])) {
+      // If we know that we're returning a single record,
+      // then just return the object.
+      return $query->row(0);
+    } else {
+      // If we could be returning any number of records,
+      // then return the array as-is.
+      return $query->result();
+    }
   }
 
   public function update_post() {
@@ -55,9 +68,8 @@ class Post_model extends CI_Model {
 
   public function remove_post() {
     $pid = $this->input->post('post_id');
-    $post = $this->get_posts_by_pid($pid);
+    $post = $this->get_posts(array('pid' => $pid));
     if ($post) {
-      $post = $post[0];
       $user = $this->session->userdata('bookswap_user');
       if ($post->uid == $user->uid) {
         $this->db->where('pid', $pid);
