@@ -73,7 +73,7 @@ class Post_model extends CI_Model {
     $this->db->where('pid', $options['pid']);
 
     // Add updated values to the query.
-    $validColumns = array('price', 'notes', 'edition', 'condition');
+    $validColumns = array('price', 'notes', 'edition', 'condition', 'status');
     foreach ($validColumns as $column) {
       if (isset($options[$column])) {
         $this->db->set($column, $options[$column]);
@@ -88,18 +88,15 @@ class Post_model extends CI_Model {
   }
 
   public function remove_post() {
-    $pid = $this->input->post('post_id');
-    $post = $this->get_posts(array('pid' => $pid));
-    if ($post) {
-      $user = $this->session->userdata('bookswap_user');
-      if ($post->uid == $user->uid) {
-        $this->db->where('pid', $pid);
-        $this->db->set('status', self::DEACTIVATED);
-        $this->db->update('posts');
-        return $pid;
-      }
+    // A pid must be specified to indicate which post to deactivate.
+    if ( ! isset($pid)) {
+      return false;
     }
-    return "Error";
+
+    return $this->update_post(array(
+        'pid' => $pid,
+        'status' => self::DEACTIVATED,
+    ));
   }
 
 }

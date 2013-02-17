@@ -42,8 +42,16 @@ class Posts extends BS_Controller {
   }
 
   public function remove_post() {
-    $data['title'] = 'Updated';
-    echo $this->post_model->remove_post();
+    $pid = $this->input->post('post_id');
+    $post = $this->post_model->get_posts(array('pid' => $pid));
+    // Verify that the post exists
+    if ($post) {
+      $user = $this->session->userdata('bookswap_user');
+      // Verify that the current user owns this post
+      if ($post->uid == $user->uid) {
+        echo $this->post_model->remove_post($pid);
+      }
+    }
   }
 
 }
