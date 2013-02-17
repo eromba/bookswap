@@ -27,17 +27,15 @@ class User extends BS_Controller {
     if ($this->input->post('login')) {
       $netid = $this->input->post('username');
       $my_result['logged_in'] = TRUE;
-      $my_result['userdata'] = $this->get_user($netid);
-      if ($my_result['userdata']) {
-        $my_result['userdata'] = $my_result['userdata'][0];
-      } else {
+      $my_result['userdata'] = $this->user_model->get_users(array('netid' => $netid));
+      if ( ! $my_result['userdata']) {
         $newuser = array(
           'netid' => $netid,
           'email' => 'john@example.edu',
           'first_name' => 'John',
         );
-        $this->add_user($newuser);
-        $my_result['userdata'] = $this->get_user($netid);
+        $this->user_model->add_user($newuser);
+        $my_result['userdata'] = $this->user_model->get_users(array('netid' => $netid));
         if ( ! $my_result['userdata']) {
           return FALSE;
         }

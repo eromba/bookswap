@@ -98,7 +98,7 @@ class Search extends BS_Controller {
         $book->posts = $this->post_model->get_posts_by_bid($book->id);
         //var_dump($book->posts);
         foreach ($book->posts as $post) {
-          $post->sellerdata = $this->user_model->get_user($post->seller);
+          $post->sellerdata = $this->user_model->get_users(array('netid' => $post->seller));
         }
 
         $book->from = $this->book_model->get_min_price($book->id);

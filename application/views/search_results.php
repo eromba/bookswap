@@ -59,7 +59,7 @@
                           <i class="icon-chevron-down"></i> Details
                         </button>
                         <div id="book-<?php echo($book->id);?>-post-<?php echo($post->id);?>" class="accordion-body collapse posting-detail span5">
-                          <?php $sellerdata=$post->sellerdata;$sellerdata=$sellerdata[0];?>
+                          <?php $sellerdata=$post->sellerdata;?>
                           Seller: <?php echo($sellerdata->first_name);?>
                           <br>
                           Email: <a href="mailto:<?php echo($sellerdata->email);?>?subject=BookSwap: I'd like to buy the book you posted&amp;body=I'd like to buy your copy of <?php echo($book->title);?>">
