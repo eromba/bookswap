@@ -6,7 +6,7 @@ class Posts extends BS_Controller {
     $user = $this->get_current_userdata();
     if ($user) {
       $data['user'] = $user;
-      $data['posts'] = $this->post_model->get_posts_by_seller($user->netid);
+      $data['posts'] = $this->post_model->get_posts_by_uid($user->uid);
       foreach ($data['posts'] as $post) {
         $post->book = $this->book_model->get_books_by_id($post->bid);
         $post->book = $post->book[0];
@@ -19,13 +19,10 @@ class Posts extends BS_Controller {
   }
 
   public function post_book() {
-    $seller = $this->get_current_userdata();
-    if ($seller) {
-      $seller = $seller->netid;
-    }
+    $user = $this->get_current_userdata();
+    $this->post_model->add_post($user->uid);
     $data['title'] = 'Posted';
     $data['notice'] = "Succesfully posted your book!";
-    $this->post_model->add_post($seller);
     $this->load->view('header', $data);
     $this->load->view('notice', $data);
     $this->load->view('footer', $data);

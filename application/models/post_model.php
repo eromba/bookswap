@@ -2,7 +2,7 @@
 
 class Post_model extends CI_Model {
 
-  public function add_post($seller) {
+  public function add_post($uid) {
     //https://plus.google.com/+LilPeck/posts/bLm9S75srcm
     $value = strval(strip_tags($this->input->post('price'))); //figured it couldn't hurt to make it string
     $myval = htmlentities($value); //important part
@@ -12,7 +12,7 @@ class Post_model extends CI_Model {
     $edition = $this->input->post('edition');
     $data = array(
         'bid' => $bid,
-        'seller' => $seller,
+        'uid' => $uid,
         'price' => $price,
         'notes' => $notes,
         'edition' => $edition
@@ -35,8 +35,8 @@ class Post_model extends CI_Model {
     return $query->result();
   }
 
-  public function get_posts_by_seller($netid) {
-    $query = $this->db->get_where('posts', array('seller' => $netid));
+  public function get_posts_by_uid($uid) {
+    $query = $this->db->get_where('posts', array('uid' => $uid));
     return $query->result();
   }
 
@@ -50,13 +50,12 @@ class Post_model extends CI_Model {
   }
 
   public function remove_post() {
-    $netid = $this->session->userdata('bookswap_user');
-    $netid = $netid->netid;
     $pid = $this->input->post('post_id');
     $post = $this->get_posts_by_pid($pid);
     if ($post) {
       $post = $post[0];
-      if ($post->seller == $netid) {
+      $user = $this->session->userdata('bookswap_user');
+      if ($post->uid == $user->uid) {
         $this->db->insert('removed_posts', $post);
         $this->db->delete('posts', array('pid' => $pid));
         return $pid;
