@@ -4,10 +4,7 @@ class Search extends BS_Controller {
 
   public function index() {
     $data['title'] = 'Home';
-
-    $this->load->view('header', $data);
-    $this->load->view('index', $data);
-    $this->load->view('footer', $data);
+    $this->render_page('index', $data);
   }
 
   public function need_update($book) {
@@ -108,10 +105,7 @@ class Search extends BS_Controller {
         $book->posts = array();
       }
     }
-    //var_dump($data['books']);
-    $this->load->view('header', $data);
-    $this->load->view('search_results', $data);
-    $this->load->view('footer', $data);
+    $this->render_page('search_results', $data);
   }
 
   public function fetch_results($q) {

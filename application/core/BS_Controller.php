@@ -20,4 +20,10 @@ class BS_Controller extends CI_Controller {
     }
   }
 
+  public function render_page($view, $data) {
+    $this->load->view('header', $data);
+    $this->load->view($view, $data);
+    $this->load->view('footer', $data);
+  }
+
 }

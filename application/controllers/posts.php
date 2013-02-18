@@ -13,9 +13,7 @@ class Posts extends BS_Controller {
       }
     }
     $data['title'] = 'My Posts';
-    $this->load->view('header', $data);
-    $this->load->view('my_posts', $data);
-    $this->load->view('footer', $data);
+    $this->render_page('my_posts', $data);
   }
 
   public function post_book() {
@@ -36,9 +34,7 @@ class Posts extends BS_Controller {
 
     $data['title'] = 'Posted';
     $data['notice'] = "Succesfully posted your book!";
-    $this->load->view('header', $data);
-    $this->load->view('notice', $data);
-    $this->load->view('footer', $data);
+    $this->render_page('notice', $data);
   }
 
   public function update_post() {
@@ -50,8 +46,8 @@ class Posts extends BS_Controller {
         'condition' => $this->input->post('condition'),
     ));
     $data['title'] = 'Updated';
-    $this->load->view('header', $data);
-    $this->load->view('footer', $data);
+    $data['notice'] = "Succesfully updated your book!";
+    $this->render_page('notice', $data);
   }
 
   public function deactivate_post() {
