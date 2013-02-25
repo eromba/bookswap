@@ -52,7 +52,7 @@
 	?></div>
 	<div id = "hiddenFields"><?php
 		if (isset($book)){
-			$bid = $book->id;
+			$bid = $book->bid;
 		}else{
 			$bid = '99999';
 		}

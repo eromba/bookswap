@@ -8,7 +8,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 CREATE TABLE IF NOT EXISTS `books` (
   `subject` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT 'Department_Code shown/known to students',
-  `id` int(10) unsigned DEFAULT NULL,
+  `bid` int(10) unsigned DEFAULT NULL,
   `class_id` int(10) unsigned NOT NULL,
   `bookstore_price` decimal(5,2) DEFAULT NULL COMMENT 'We store here rather than Items, because you could have the same Item being listed at different prices depending  on the bookstore.',
   `isbn` char(13) CHARACTER SET utf8 DEFAULT NULL,
@@ -30,9 +30,9 @@ CREATE TABLE IF NOT EXISTS `books` (
   `subj_class` varchar(16) DEFAULT NULL,
   `row_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`row_id`),
-  KEY `id` (`id`),
   KEY `isbn` (`isbn`),
-  KEY `course` (`course`)
+  KEY `course` (`course`),
+  KEY `bid` (`bid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3034 ;
 
 CREATE TABLE IF NOT EXISTS `posts` (

@@ -90,12 +90,12 @@ class Search extends BS_Controller {
     }
     foreach ($data['books'] as $book) {
       if ($book->stock >= 1) {
-        $book->posts = $this->post_model->get_active_posts(array('bid' => $book->id));
+        $book->posts = $this->post_model->get_active_posts(array('bid' => $book->bid));
         foreach ($book->posts as $post) {
           $post->sellerdata = $this->user_model->get_users(array('uid' => $post->uid));
         }
 
-        $book->from = $this->book_model->get_min_price($book->id);
+        $book->from = $this->book_model->get_min_price($book->bid);
       } else {
         $book->posts = array();
       }

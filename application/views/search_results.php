@@ -55,10 +55,10 @@
                       <div class = "posting row">
                         <div class="span2"> Price: <span class="price"><?php echo($post->price);?></span></div>
                         <div class="span2"> Condition: <span class="price"><?php echo($post->condition);?></span></div>
-                        <button type="button" class="btn btn-mini btn-info" data-toggle="collapse" data-target="#book-<?php echo($book->id);?>-post-<?php echo($post->pid);?>">
+                        <button type="button" class="btn btn-mini btn-info" data-toggle="collapse" data-target="#book-<?php echo($book->bid);?>-post-<?php echo($post->pid);?>">
                           <i class="icon-chevron-down"></i> Details
                         </button>
-                        <div id="book-<?php echo($book->id);?>-post-<?php echo($post->pid);?>" class="accordion-body collapse posting-detail span5">
+                        <div id="book-<?php echo($book->bid);?>-post-<?php echo($post->pid);?>" class="accordion-body collapse posting-detail span5">
                           <?php $sellerdata=$post->sellerdata;?>
                           Seller: <?php echo($sellerdata->first_name);?>
                           <br>

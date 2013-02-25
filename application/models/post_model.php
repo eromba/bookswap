@@ -37,7 +37,7 @@ class Post_model extends CI_Model {
     $pid = $this->db->insert_id();
     if ($pid) {
       // Increment the "stock" value for this book.
-      $this->db->where('id', $options['bid']);
+      $this->db->where('bid', $options['bid']);
       $this->db->set('stock', 'stock+1', FALSE);
       $this->db->update('books');
     }
