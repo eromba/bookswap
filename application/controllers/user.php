@@ -1,47 +1,49 @@
 <?php
 
+/**
+ * NOTE: This class is an example implementation that is intended for testing
+ * and development use only. It does NO password-checking and should be either
+ * expanded or replaced with a real authentication mechanism in production.
+ */
 class User extends BS_Controller {
 
   public function login() {
-    $result = $this->authenticate();
-    $this->session->set_userdata('last_page', $result['last_page']);
-    //save last page, just add userdata to session and go back to last page. If failed, go to failure page and keep last page saved for when they succeed or hit back.
-    if ($result['logged_in']) {
-      $this->session->set_userdata('bookswap_user', $result['userdata']);
-    } else {
-      $this->session->set_flashdata('headernotice', "Invalid username/password");
+    if ( ! $this->user) {
+      $user = $this->authenticate();
+      if ($user) {
+        $this->session->set_userdata('bookswap_user', $user);
+      }
     }
-    redirect($result['last_page']);
+    redirect($this->get_last_page());
   }
 
   public function logout() {
     $this->session->sess_destroy();
-    redirect(base_url() . 'index.php');
+    redirect(base_url('index.php'));
   }
 
-  public function authenticate(){
-    $my_result = array(
-      'logged_in' => FALSE,
-      'last_page' => $this->input->post('current_page'),
-    );
-    if ($this->input->post('login')) {
-      $netid = $this->input->post('username');
-      $my_result['logged_in'] = TRUE;
-      $my_result['userdata'] = $this->user_model->get_users(array('netid' => $netid));
-      if ( ! $my_result['userdata']) {
-        $newuser = array(
-          'netid' => $netid,
-          'email' => 'john@example.edu',
-          'first_name' => 'John',
-        );
-        $this->user_model->add_user($newuser);
-        $my_result['userdata'] = $this->user_model->get_users(array('netid' => $netid));
-        if ( ! $my_result['userdata']) {
-          return FALSE;
-        }
-      }
+  /**
+   * Authenticates the current user.
+   *
+   * @return stdClass The user's BookSwap user object,
+   *                  or FALSE if authentication fails.
+   */
+  public function authenticate() {
+    $netid = $this->input->post('username', TRUE);
+    if ( ! $netid) {
+      return FALSE;
     }
-    return $my_result;
+    $user = $this->user_model->get_users(array('netid' => $netid));
+    if ( ! $user) {
+      $new_user = array(
+        'netid' => $netid,
+        'email' => 'john@example.edu',
+        'first_name' => 'John',
+      );
+      $this->user_model->add_user($new_user);
+      $user = $this->user_model->get_users(array('netid' => $netid));
+    }
+    return $user;
   }
 
 }

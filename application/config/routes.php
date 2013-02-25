@@ -52,7 +52,7 @@ $route['update_post'] = 'posts/update_post';
 $route['myposts'] = 'posts/my_posts';
 $route['myposts/deactivate'] = 'posts/deactivate_post';
 
-// User Account
+// User Authentication
 $route['login'] = 'user/login';
 $route['logout'] = 'user/logout';
 

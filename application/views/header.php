@@ -6,7 +6,7 @@
   <link type="text/css" rel="stylesheet" href="<?php echo base_url();?>css/custom.css" />
   <link type="text/css" rel="stylesheet" href="<?php echo base_url();?>css/bootstrap.min.css" />
 </head>
-<?php if($this->session->userdata('bookswap_user')){$user=$this->session->userdata('bookswap_user');?>
+<?php if ($logged_in) { ?>
 <body class="logged-in">
     <div class="navbar">
       <div class="navbar-inner">
@@ -29,12 +29,18 @@
     <div class="navbar-inner">
       <a class="brand" href="<?php echo base_url().'index.php'?>"><i class="icon-home icon-large"></i> </a><span class="brand"><?php echo $title?></span>
       <?php $this->load->view('search_form');?>
-      <?php $this->load->view('login_form');?>
-      <?php if ($this->session->flashdata('headernotice')){?>
-        <div class = "header-notice pull-right">
-        <?php echo($this->session->flashdata('headernotice'));?>
-      </div>
-      <?php }?>
+      <ul class="nav pull-right">
+        <?php
+          echo form_open('login', array(
+            'class' => 'navbar-form pull-right',
+            'id'    => 'login-form'
+          ));
+        ?>
+          <input type="text" name="username" class="span2" placeholder="NetID" />
+          <input type="password" name="password" class="span2" placeholder="Password" />
+          <input type="submit" name="submit" value="Log in" class="btn" />
+        </form>
+      </ul>
     </div>
   </div>
         

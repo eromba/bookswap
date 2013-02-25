@@ -80,7 +80,7 @@
                 <?php }?>
             </div>
           </div>
-          <?php if($seller){?>
+          <?php if($user){?>
             <div class="sell-yours button-box">
               <button class="btn-success btn" data-toggle="collapse" data-target="#postform-container-<?php echo($formcount);?>">Sell yours</button>
               <span>Have a copy to sell?</span>

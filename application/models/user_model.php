@@ -2,8 +2,34 @@
 
 class User_model extends CI_Model {
 
-  public function add_user($data) {
-    return ($this->db->insert('users', $data));
+  /**
+   * Creates a new user in the database.
+   *
+   * At minimum, the $options array must specify values for the following columns:
+   *  - netid
+   *  - email
+   *
+   * @param array $options Array of columns => values to be saved to the database
+   * @return int insert_id() The ID of the inserted user, or false on error
+   */
+  public function add_user($options = array()) {
+    $requiredColumns = array('netid', 'email');
+    foreach ($requiredColumns as $column) {
+      if ( ! isset($options[$column])) {
+        return false;
+      }
+    }
+
+    $validColumns = array('netid', 'email', 'first_name');
+    foreach ($validColumns as $column) {
+      if (isset($options[$column])) {
+        $this->db->set($column, $options[$column]);
+      }
+    }
+
+    $this->db->insert('users', $options);
+
+    return $this->db->insert_id();
   }
 
   /**
@@ -28,6 +54,32 @@ class User_model extends CI_Model {
     } else {
       return $query->result();
     }
+  }
+
+  /**
+   * Updates a user in the database.
+   *
+   * At minimum, the $options array must specify the uid of the post to update.
+   *
+   * @param array $options Array of columns => values to be saved to the database
+   * @return int affected_rows() Number of rows updated, or false on error
+   */
+  public function update_user($options = array()) {
+    if ( ! isset($options['uid'])) {
+      return false;
+    }
+    $this->db->where('uid', $options['uid']);
+
+    $validColumns = array('netid', 'email', 'first_name');
+    foreach ($validColumns as $column) {
+      if (isset($options[$column])) {
+        $this->db->set($column, $options[$column]);
+      }
+    }
+
+    $this->db->update('users');
+
+    return $this->db->affected_rows();
   }
 
 }
