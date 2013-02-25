@@ -81,6 +81,18 @@ class Post_model extends CI_Model {
   }
 
   /**
+   * Returns the lowest selling price for the given book.
+   *
+   * @param integer $bid
+   * @return integer
+   */
+  public function get_min_price($bid) {
+    $this->db->select_min('price');
+    $query = $this->db->get_where('posts', array('bid' => $bid));
+    return $query->row(0)->price;
+  }
+
+  /**
    * Updates a post in the database.
    *
    * At minimum, the $options array must specify the pid of the post to update.

@@ -29,25 +29,29 @@ class Book_model extends CI_Model {
     return $query->result();
   }
 
-  public function get_books_by_all($q) {
+  /**
+   * Retrieves books from the database that match the given string.
+   *
+   * @param string $string The string to search by
+   * @return array Array of book objects
+   */
+  public function get_books_by_string($string) {
     $this->db->from('books');
-    $query = $this->db->like('subj_class', $q);
-    $query = $this->db->or_like('title', $q);
-    $query = $this->db->or_like('subject', $q);
+    $query = $this->db->like('subj_class', $string);
+    $query = $this->db->or_like('title', $string);
+    $query = $this->db->or_like('subject', $string);
     $query = $this->db->get();
     return $query->result();
   }
 
+  /**
+   * Retrieves books from the database that match the given ISBN.
+   *
+   * @param integer $isbn The ISBN to search by
+   * @return array Array of book objects
+   */
   public function get_books_by_isbn($isbn) {
     $query = $this->db->get_where('books', array('isbn' => $isbn));
-    return $query->result();
-  }
-
-  public function get_min_price($bid) {
-    $this->db->select_min('price');
-    $query = $this->db->get_where('posts', array('bid' => $bid));
-    // Produces: SELECT MIN(age) as age FROM members
-    //$query = $this->db->get_where('posts', array('bid' => $bid,'price <'=>$price));
     return $query->result();
   }
 

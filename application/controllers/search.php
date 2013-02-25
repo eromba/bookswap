@@ -22,7 +22,7 @@ class Search extends BS_Controller {
           $post->sellerdata = $this->user_model->get_users(array('uid' => $post->uid));
         }
 
-        $book->from = $this->book_model->get_min_price($book->bid);
+        $book->from = $this->post_model->get_min_price($book->bid);
       } else {
         $book->posts = array();
       }
@@ -34,7 +34,7 @@ class Search extends BS_Controller {
     if (intval($q) > 999) {
       $results = $this->book_model->get_books_by_isbn($q);
     } else {
-      $results = $this->book_model->get_books_by_all($q);
+      $results = $this->book_model->get_books_by_string($q);
     }
 
     if ($q == NULL) {
