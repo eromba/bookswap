@@ -24,29 +24,6 @@ class Book_model extends CI_Model {
    */
   private $associate_tag = "";
 
-  public function add_book() {
-    $seller = $this->input->post('seller');
-    $price = $this->input->post('price');
-    $id = mt_rand();
-    $title = $this->input->post('title');
-    $isbn = $this->input->post('isbn');
-    $course = $this->input->post('course');
-    $subject = $this->input->post('subject');
-    $cover = $this->input->post('cover');
-    $section = $this->input->post('cover');
-    $data = array(
-        'isbn' => $isbn,
-        'course' => $course,
-        'subject' => $subject,
-        'cover' => $cover,
-        'section' => $section,
-        'title' => $title,
-        'seller' => $seller,
-        'price' => $price
-    );
-    return ($this->db->insert('books', $data));
-  }
-
   public function get_books() {
     $query = $this->db->get('books');
     return $query->result();
@@ -61,34 +38,8 @@ class Book_model extends CI_Model {
     return $query->result();
   }
 
-  public function get_books_by_id($id) {
-    $query = $this->db->get_where('books', array('id' => $id));
-    return $query->result();
-  }
-
   public function get_books_by_isbn($isbn) {
     $query = $this->db->get_where('books', array('isbn' => $isbn));
-    return $query->result();
-  }
-
-  public function get_books_by_title($title) {
-    $this->db->from('books');
-    $query = $this->db->like('title', $title);
-    $query = $this->db->get();
-    return $query->result();
-  }
-
-  public function get_books_by_course($course) {
-    $this->db->from('books');
-    $query = $this->db->like('subj_class', $course);
-    $query = $this->db->get();
-    return $query->result();
-  }
-
-  public function get_books_by_subject($subject) {
-    $this->db->from('books');
-    $query = $this->db->like('subject', $subject);
-    $query = $this->db->get();
     return $query->result();
   }
 
@@ -104,19 +55,6 @@ class Book_model extends CI_Model {
     $this->db->where('isbn', $isbn);
     $this->db->set('have_cover', 1);
     $this->db->update('books');
-  }
-
-  private function verifyXmlResponse($response) {
-    //var_dump($response);
-    if ($response === False) {
-      throw new Exception("Could not connect to Amazon");
-    } else {
-      if (isset($response->Items->Item->ItemAttributes->Title)) {
-        return ($response);
-      } else {
-        throw new Exception("Invalid xml response.");
-      }
-    }
   }
 
   public function get_amazon_from_isbn($isbn) {
