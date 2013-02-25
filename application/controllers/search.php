@@ -27,8 +27,9 @@ class Search extends BS_Controller {
 
   public function results($q = "") {
     if ($this->input->post('q') != NULL) {
-      header('Location: ' . base_url() . 'search/' . $this->input->post('q'));
+      redirect(base_url() . 'search/' . $this->input->post('q'));
     }
+    $q = urldecode($q);
     $data['q'] = $q;
     $data['books'] = $this->fetch_results($q);
     $data['title'] = "Results";
