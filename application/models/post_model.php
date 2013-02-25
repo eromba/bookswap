@@ -70,6 +70,17 @@ class Post_model extends CI_Model {
   }
 
   /**
+   * Retrieves active posts from the database.
+   *
+   * @param array $options Array of query conditions (pid, uid, bid)
+   * @return array result() Array of post objects
+   */
+  public function get_active_posts($options = array()) {
+    $options['status'] = self::ACTIVE;
+    return $this->get_posts($options);
+  }
+
+  /**
    * Updates a post in the database.
    *
    * At minimum, the $options array must specify the pid of the post to update.
