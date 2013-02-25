@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `course` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT 'Course_Code known/shown to students',
   `department_id` int(10) unsigned NOT NULL,
   `stock` int(11) NOT NULL DEFAULT '0',
-  `have_cover` tinyint(1) NOT NULL DEFAULT '0',
+  `image_url` varchar(255) DEFAULT NULL,
   `amzn_link` text,
   `amzn_used_price` decimal(5,2) DEFAULT NULL,
   `amzn_new_price` decimal(5,2) DEFAULT NULL,

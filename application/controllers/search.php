@@ -14,14 +14,6 @@ class Search extends BS_Controller {
     if ($book->amzn_updated_at == NULL) {
       return true;
     }
-    $curr = getcwd();
-    $imgFile = $curr . "/img/book-covers/" . $book->isbn . ".jpg";
-    if (!(file_exists($imgFile))) {
-      return true;
-    }
-    if (filesize($imgFile) == 0) {
-      return true;
-    }
     return false;
   }
 
@@ -46,18 +38,8 @@ class Search extends BS_Controller {
           $imgURL = $result->Items->Item->MediumImage->URL;
           $title = $result->Items->Item->ItemAttributes->Title;
           $curr = getcwd();
-          $imgFile = $curr . "/img/book-covers/" . $book->isbn . ".jpg";
-          //echo filesize($imgFile);
-          if ((!(file_exists($imgFile))) || (filesize($imgFile) == 0)) {
-            ini_set('allow_url_fopen', 1);
-            $ch = curl_init($imgURL);
-            $fp = fopen($imgFile, 'w');
-            curl_setopt($ch, CURLOPT_FILE, $fp);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_exec($ch);
-            curl_close($ch);
-            fclose($fp);
-            $this->book_model->have_cover($book->isbn);
+          if ($imgURL != NULL) {
+            $book->image_url = $imgURL;
           }
           $book->amzn_link = "$url";
           if (!($lowestUsedPrice == NULL)) {

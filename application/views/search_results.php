@@ -9,24 +9,14 @@
       <span class="offset4 span5"><?php echo($results_count);?> match for your search: "<?php echo($q);?>"</span>
       <?php }?>
   </div>
-  <?php $covernaurl = base_url() . "img/covernotavailable.jpg";?>
+  <?php $no_cover_img = base_url() . "img/covernotavailable.jpg";?>
   <div class = "row"  id="results">
     <?php  foreach ($books as $book){?>
       <div class = "result span8 offset2">
         <div class="book">
           <h3 class="title"><?php echo($book->title);?></h3>
           <div class="cover">
-              <?php $coverurl = base_url() . "img/book-covers/". $book->isbn . ".jpg";
-              try{
-                $coverfile = filesize(getcwd() . "/img/book-covers/". $book->isbn . ".jpg");
-              }catch (Exception $e) {
-                $coverfile=0;
-              }  
-                if ($coverfile!=0){
-                  ?><img src=<?php echo $coverurl;?>  class="img-polaroid book-cover"/><?php
-                }else{
-                  ?><img src=<?php echo $covernaurl;?>  class="img-polaroid book-cover"/>
-              <?php }?>
+            <img src="<?php echo ($book->image_url) ? $book->image_url : $no_cover_img; ?>"  class="img-polaroid book-cover"/>
           </div>
           <div class="info">
             <div class="book-info span3">
@@ -100,14 +90,3 @@
     <?php }?>
   </div>
 </div>
-
-<?php
-  function checkRemoteFile($url){
-   $ch = curl_init($url);
-curl_setopt($ch, CURLOPT_NOBODY, true); // set to HEAD request
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // don't output the response
-curl_exec($ch);
-$valid = curl_getinfo($ch, CURLINFO_HTTP_CODE) == 200;
-curl_close($ch);
-return $valid;
-  }

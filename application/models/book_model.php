@@ -51,12 +51,6 @@ class Book_model extends CI_Model {
     return $query->result();
   }
 
-  public function have_cover($isbn) {
-    $this->db->where('isbn', $isbn);
-    $this->db->set('have_cover', 1);
-    $this->db->update('books');
-  }
-
   public function get_amazon_from_isbn($isbn) {
     require('aws_signed_request.php');
     //require('amazon_api_class.php');
@@ -76,6 +70,8 @@ class Book_model extends CI_Model {
 
   public function update_amazon_data($book, $uptitle) {
     $this->db->where('isbn', $book->isbn);
+    if ($book->image_url)
+      $this->db->set('image_url', $book->image_url, FALSE);
     if ($book->amzn_used_price)
       $this->db->set('amzn_used_price', $book->amzn_used_price, FALSE);
     if ($book->amzn_new_price)
