@@ -43,7 +43,6 @@ $route['default_controller'] = 'search';
 $route['404_override'] = '';
 
 // Search Results
-$route['search/(:any)'] = 'search/results/$1';
 $route['search'] = 'search/results';
 
 // User Posts

@@ -1,5 +1,5 @@
 <?php
-	echo form_open('search',array('class'=>"navbar-form pull-left"),array('submit'=>true));
+	echo form_open('search',array('class'=>"navbar-form pull-left",'method'=>'get'));
 	$options = array (
 		'name'=>'q',
 		'id'    => 'query',
@@ -12,7 +12,6 @@
 	$options = array(
 		'class' => 'btn btn-small',
 		'id' => 'searchsubmit',
-		'name'=>'search',
 		'value'=>'Search'
 	);
 	echo form_submit($options);

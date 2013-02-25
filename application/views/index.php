@@ -19,7 +19,7 @@ window.onload = function(){
 <div class="row">
   <div id="search-box" class="span7 offset3">
       <?php
-        echo form_open('search',array('class'=>""),array('submit'=>true));
+        echo form_open('search',array('class'=>'', 'method'=>'get'));
         $options = array (
           'size'=>'14',
           'name'=>'q',
@@ -33,7 +33,6 @@ window.onload = function(){
       $options = array(
         'class' => 'btn btn-inverse',
         'id' => 'front-submit',
-        'name'=>'search',
         'value'=>'Search'
         );
       ?><a id="howto-icon" href="#howto-modal" role="button" data-toggle="modal"> <i class="icon-info-sign"></i> </a><?php

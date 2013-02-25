@@ -7,11 +7,8 @@ class Search extends BS_Controller {
     $this->render_page('index', $data);
   }
 
-  public function results($query = "") {
-    if ($this->input->post('q') != NULL) {
-      redirect(base_url() . 'search/' . $this->input->post('q'));
-    }
-    $query = urldecode($query);
+  public function results() {
+    $query = $this->input->get('q');
     if (empty($query)) {
       redirect($this->get_last_page());
     }
