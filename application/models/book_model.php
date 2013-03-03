@@ -3,28 +3,6 @@
 class Book_model extends CI_Model {
 
   /**
-   * Your Amazon Access Key Id
-   * @access private
-   * @var string
-   */
-  private $public_key = "";
-
-  /**
-   * Your Amazon Secret Access Key
-   * @access private
-   * @var string
-   */
-  private $private_key = "";
-
-  /**
-   * Your Amazon Associate Tag
-   * Now required, effective from 25th Oct. 2011
-   * @access private
-   * @var string
-   */
-  private $associate_tag = "";
-
-  /**
    * Retrieves books from the database that match the given string.
    *
    * @param string $string The string to search by
@@ -48,23 +26,6 @@ class Book_model extends CI_Model {
   public function get_books_by_isbn($isbn) {
     $query = $this->db->get_where('books', array('isbn' => $isbn));
     return $query->result();
-  }
-
-  public function get_amazon_from_isbn($isbn) {
-    require('aws_signed_request.php');
-    //require('amazon_api_class.php');
-    $parameters = array("Operation" => "ItemLookup",
-        "ItemId" => $isbn,
-        "SearchIndex" => "Books",
-        "IdType" => "EAN",
-        "ResponseGroup" => "Medium");
-    try {
-      //$obj = new AmazonProductAPI();
-      $result = aws_signed_request("com", $parameters, $this->public_key, $this->private_key, $this->associate_tag);
-      return $result;
-    } catch (Exception $e) {
-      echo $e->getMessage();
-    }
   }
 
   public function update_amazon_data($book, $uptitle) {
