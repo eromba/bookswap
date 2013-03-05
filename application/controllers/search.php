@@ -53,15 +53,15 @@ class Search extends BS_Controller {
   }
 
   /**
-   * Determines if the given query is a valid ISBN.
+   * Determines if the given query string is a valid ISBN.
    *
-   * @param string $query The query to be evaluated
-   * @return integer The integer value of the ISBN, or FALSE
+   * @param string $query The query string to be evaluated
+   * @return string The ISBN, or FALSE if the ISBN is invalid
    */
   private function get_isbn($query) {
     $isbn = str_replace(array(' ', '-'), '', $query);
     if (preg_match('/^(97(8|9))?\d{9}(\d|X)$/', $isbn)) {
-      return intval($isbn);
+      return $isbn;
     }
     return FALSE;
   }

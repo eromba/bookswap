@@ -20,7 +20,7 @@ class Book_model extends CI_Model {
   /**
    * Retrieves books from the database that match the given ISBN.
    *
-   * @param integer $isbn The ISBN to search by
+   * @param string $isbn The ISBN to search by
    * @return array Array of book objects
    */
   public function get_books_by_isbn($isbn) {
