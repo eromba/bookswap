@@ -35,7 +35,7 @@ class Amazon_model extends CI_Model {
    */
   private function verify_response($response) {
     $request = $response->Items->Request;
-    if ((string)$request->IsValid === 'False') {
+    if ((string) $request->IsValid === 'False') {
       $message = 'Invalid Amazon API request:';
       $errors = $request->xpath('Errors/Error');
       foreach ($errors as $error) {
@@ -65,8 +65,8 @@ class Amazon_model extends CI_Model {
     $amazon_data = $this->query_amazon($parameters);
     $book_results = $amazon_data->xpath('Items/Item');
     $books = array();
-    foreach($book_results as $book_result) {
-      $isbn            = (string)$book_result->ItemAttributes->EAN;
+    foreach ($book_results as $book_result) {
+      $isbn            = (string) $book_result->ItemAttributes->EAN;
       $title           = $book_result->ItemAttributes->Title;
       $image_url       = $book_result->MediumImage->URL;
       $amzn_link       = $book_result->DetailPageURL;
@@ -75,12 +75,12 @@ class Amazon_model extends CI_Model {
       $amzn_used_price = $book_result->OfferSummary->LowestUsedPrice->Amount;
       $books[$isbn] = array(
         'isbn'            => $isbn,
-        'title'           => ($title)           ? (string)$title                  : NULL,
-        'image_url'       => ($image_url)       ? (string)$image_url              : NULL,
-        'amzn_link'       => ($amzn_link)       ? (string)$amzn_link              : NULL,
-        'amzn_list_price' => ($amzn_list_price) ? ((float)$amzn_list_price / 100) : NULL,
-        'amzn_new_price'  => ($amzn_new_price)  ? ((float)$amzn_new_price  / 100) : NULL,
-        'amzn_used_price' => ($amzn_used_price) ? ((float)$amzn_used_price / 100) : NULL,
+        'title'           => ($title)           ? (string) $title                  : NULL,
+        'image_url'       => ($image_url)       ? (string) $image_url              : NULL,
+        'amzn_link'       => ($amzn_link)       ? (string) $amzn_link              : NULL,
+        'amzn_list_price' => ($amzn_list_price) ? ((float) $amzn_list_price / 100) : NULL,
+        'amzn_new_price'  => ($amzn_new_price)  ? ((float) $amzn_new_price  / 100) : NULL,
+        'amzn_used_price' => ($amzn_used_price) ? ((float) $amzn_used_price / 100) : NULL,
       );
     }
     return $books;

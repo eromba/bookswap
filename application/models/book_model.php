@@ -59,10 +59,10 @@ class Book_model extends CI_Model {
    */
   public function update_amazon_data($book_details) {
     $data = array();
-    $validColumns = array('isbn', 'title', 'image_url', 'amzn_link', 'amzn_list_price', 'amzn_new_price', 'amzn_used_price');
+    $valid_columns = array('isbn', 'title', 'image_url', 'amzn_link', 'amzn_list_price', 'amzn_new_price', 'amzn_used_price');
     foreach ($book_details as $amazon_book) {
       $row = array();
-      foreach ($validColumns as $column) {
+      foreach ($valid_columns as $column) {
         if (isset($amazon_book[$column])) {
           $row[$column] = $amazon_book[$column];
         }

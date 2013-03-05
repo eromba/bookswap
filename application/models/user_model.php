@@ -20,8 +20,8 @@ class User_model extends CI_Model {
       }
     }
 
-    $validColumns = array('netid', 'email', 'first_name');
-    foreach ($validColumns as $column) {
+    $valid_columns = array('netid', 'email', 'first_name');
+    foreach ($valid_columns as $column) {
       if (isset($options[$column])) {
         $this->db->set($column, $options[$column]);
       }
@@ -40,8 +40,8 @@ class User_model extends CI_Model {
    *                        a uid or netid is specified
    */
   public function get_users($options = array()) {
-    $validColumns = array('uid', 'netid', 'email', 'first_name');
-    foreach ($validColumns as $column) {
+    $valid_columns = array('uid', 'netid', 'email', 'first_name');
+    foreach ($valid_columns as $column) {
       if (isset($options[$column])) {
         $this->db->where($column, $options[$column]);
       }
@@ -70,8 +70,8 @@ class User_model extends CI_Model {
     }
     $this->db->where('uid', $options['uid']);
 
-    $validColumns = array('netid', 'email', 'first_name');
-    foreach ($validColumns as $column) {
+    $valid_columns = array('netid', 'email', 'first_name');
+    foreach ($valid_columns as $column) {
       if (isset($options[$column])) {
         $this->db->set($column, $options[$column]);
       }

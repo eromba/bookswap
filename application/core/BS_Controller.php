@@ -19,7 +19,7 @@ class BS_Controller extends CI_Controller {
 
   public function render_page($view, $data) {
     $data['user'] = $this->user;
-    $data['logged_in'] = ($this->user != null);
+    $data['logged_in'] = ($this->user != NULL);
 
     $this->load->view('header', $data);
     $this->load->view($view, $data);

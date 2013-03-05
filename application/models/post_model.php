@@ -25,8 +25,8 @@ class Post_model extends CI_Model {
       }
     }
 
-    $validColumns = array('uid', 'bid', 'price', 'notes', 'edition', 'condition');
-    foreach ($validColumns as $column) {
+    $valid_columns = array('uid', 'bid', 'price', 'notes', 'edition', 'condition');
+    foreach ($valid_columns as $column) {
       if (isset($options[$column])) {
         $this->db->set($column, $options[$column]);
       }
@@ -53,8 +53,8 @@ class Post_model extends CI_Model {
    *                        a pid is specified
    */
   public function get_posts($options = array()) {
-    $validColumns = array('pid', 'uid', 'bid', 'status');
-    foreach ($validColumns as $column) {
+    $valid_columns = array('pid', 'uid', 'bid', 'status');
+    foreach ($valid_columns as $column) {
       if (isset($options[$column])) {
         $this->db->where($column, $options[$column]);
       }
@@ -106,8 +106,8 @@ class Post_model extends CI_Model {
     }
     $this->db->where('pid', $options['pid']);
 
-    $validColumns = array('price', 'notes', 'edition', 'condition', 'status');
-    foreach ($validColumns as $column) {
+    $valid_columns = array('price', 'notes', 'edition', 'condition', 'status');
+    foreach ($valid_columns as $column) {
       if (isset($options[$column])) {
         $this->db->set($column, $options[$column]);
       }
