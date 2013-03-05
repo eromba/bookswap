@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `amzn_used_price` decimal(5,2) DEFAULT NULL,
   `amzn_new_price` decimal(5,2) DEFAULT NULL,
   `amzn_list_price` decimal(5,2) DEFAULT NULL,
-  `amzn_updated_at` timestamp NULL DEFAULT NULL,
+  `amzn_last_update` timestamp NULL DEFAULT NULL,
   `subj_class` varchar(16) DEFAULT NULL,
   `row_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`row_id`),
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `condition` enum('Very Good','Good','Ok','Poor') NOT NULL DEFAULT 'Ok',
   `status` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `sessions` (
   `session_id` varchar(40) NOT NULL DEFAULT '0',
