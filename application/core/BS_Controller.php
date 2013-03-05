@@ -2,6 +2,14 @@
 
 class BS_Controller extends CI_Controller {
 
+  /**
+   * Whether the current request should be saved as the last-visited page in
+   * the user's session data.
+   * @access protected
+   * @var bool
+   */
+  protected $set_last_page = TRUE;
+
   public function __construct() {
     parent::__construct();
     $this->config->load('bookswap');
@@ -32,7 +40,9 @@ class BS_Controller extends CI_Controller {
    * @see http://ellislab.com/codeigniter/user-guide/general/controllers.html#output
    */
   public function _output($output) {
-    $this->session->set_userdata('last_page', current_url());
+    if ($this->set_last_page) {
+      $this->session->set_userdata('last_page', current_url());
+    }
     echo $output;
   }
 
