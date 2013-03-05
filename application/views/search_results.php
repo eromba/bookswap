@@ -4,9 +4,9 @@
     if ($results_count<1){?>
       <span class="offset4 span5"> No books match your search. Try searching by different criteria.</span>
     <?php }else if ($results_count==1){?>
-      <span class="offset4 span5">1 match for your search: "<?php echo($q);?>"</span>
+      <span class="offset4 span5">1 match for your search: "<?php echo($query);?>"</span>
     <?php }else{?>
-      <span class="offset4 span5"><?php echo($results_count);?> match for your search: "<?php echo($q);?>"</span>
+      <span class="offset4 span5"><?php echo($results_count);?> match for your search: "<?php echo($query);?>"</span>
       <?php }?>
   </div>
   <?php $no_cover_img = base_url() . "img/covernotavailable.jpg";?>
@@ -39,7 +39,7 @@
                   <button type="button" class="btn btn-danger" data-toggle="collapse" data-target="#sellers-list-book-<?php echo($book->isbn);?>">
                     <i class="icon-list"></i> <?php echo(count($book->posts));?> posting<?php if(count($book->posts)>1){echo('s');}?>
                   </button>  
-                  starting at $<?php $from=$book->from;echo($from[0]->price);?> dollars.
+                  starting at $<?php echo $book->min_price; ?> dollars.
                   <div id="sellers-list-book-<?php echo($book->isbn);?>" class="accordion-body collapse">
                     <?php  foreach ($book->posts as $post){?>
                       <div class = "posting row">
@@ -49,11 +49,11 @@
                           <i class="icon-chevron-down"></i> Details
                         </button>
                         <div id="book-<?php echo($book->bid);?>-post-<?php echo($post->pid);?>" class="accordion-body collapse posting-detail span5">
-                          <?php $sellerdata=$post->sellerdata;?>
-                          Seller: <?php echo($sellerdata->first_name);?>
+                          <?php $seller = $post->user;?>
+                          Seller: <?php echo($seller->first_name);?>
                           <br>
-                          Email: <a href="mailto:<?php echo($sellerdata->email);?>?subject=BookSwap: I'd like to buy the book you posted&amp;body=I'd like to buy your copy of <?php echo($book->title);?>">
-                                        <?php echo($sellerdata->email);?>
+                          Email: <a href="mailto:<?php echo($seller->email);?>?subject=BookSwap: I'd like to buy the book you posted&amp;body=I'd like to buy your copy of <?php echo($book->title);?>">
+                                        <?php echo($seller->email);?>
                                       </a>
                           <br>
                           Notes:<span class="notes"><?php echo($post->notes);?></span>

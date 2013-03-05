@@ -24,11 +24,6 @@ class Book_model extends CI_Model {
    */
   private $associate_tag = "";
 
-  public function get_books() {
-    $query = $this->db->get('books');
-    return $query->result();
-  }
-
   /**
    * Retrieves books from the database that match the given string.
    *
