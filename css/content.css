@@ -1,0 +1,118 @@
+/**
+ * Content Styles
+ */
+
+.user-menu .icon-user {
+  margin-right: 2px;
+}
+
+.user-menu .dropdown-toggle .icon-user {
+  opacity: .5;
+}
+
+.user-menu .dropdown-toggle:hover .icon-user {
+  opacity: 1;
+}
+
+#header {
+  text-align: center;
+}
+
+/**
+ * Front Page
+ */
+
+/* Center main content horizontally and vertically */
+
+.front #page-wrapper {
+  position: relative;
+}
+
+.front #page {
+  height: 294px; /* #columns-wrapper height */
+  overflow: auto;
+  padding-bottom: 161px; /* #footer height + #footer padding + #footer border */
+}
+
+.front #columns-wrapper {
+  height: 294px;
+  left: 50%;
+  margin-left: -300px; /* #columns-wrapper width / 2 */
+  /* margin-top: (#columns-wrapper height
+                  + #footer height
+                  - #secondary-menu-bar height) / 2 */
+  margin-top: -210px;
+  position: absolute;
+  top: 50%;
+  width: 600px;
+}
+
+.front #columns {
+  background: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  text-align: center;
+}
+
+/* Search Input */
+
+#search-bar form {
+  margin-bottom: 30px;
+}
+
+#search-input,
+#search-button {
+  font-size: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#search-input {
+  width: 400px;
+  padding-left: 9px;
+  padding-right: 9px;
+}
+
+#search-button {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+/**
+ * About this Site Modal
+ */
+
+#about-modal .modal-body {
+  max-height: 450px;
+}
+
+.credits li {
+  margin-bottom: 10px;
+}
+
+/**
+ * Login Modal
+ */
+
+#login-modal {
+  margin-left: -175px;
+  width: 350px;
+}
+
+#login-form {
+  margin: 0 auto;
+  text-align: left;
+  width: 220px;
+}
+
+#login-modal .modal-footer {
+  text-align: center;
+}
+
+/**
+ * How It Works Modal
+ */
+
+#how-it-works-modal .modal-body {
+  max-height: 450px;
+}

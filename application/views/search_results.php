@@ -52,7 +52,7 @@
                           <?php $seller = $post->user;?>
                           Seller: <?php echo($seller->first_name);?>
                           <br>
-                          Email: <a href="mailto:<?php echo($seller->email);?>?subject=BookSwap: I'd like to buy the book you posted&amp;body=I'd like to buy your copy of <?php echo($book->title);?>">
+                          Email: <a href="mailto:<?php echo($seller->email);?>?subject=<?php print $site_name; ?>: I'd like to buy the book you posted&amp;body=I'd like to buy your copy of <?php echo($book->title);?>">
                                         <?php echo($seller->email);?>
                                       </a>
                           <br>

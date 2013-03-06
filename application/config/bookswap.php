@@ -2,6 +2,19 @@
 
 /*
 |--------------------------------------------------------------------------
+| UI Strings
+|--------------------------------------------------------------------------
+*/
+$config['ui_strings'] = array(
+  'site_name'         => 'BookSwap',
+  'university_name'   => 'Your University',
+  'university_url'    => 'http://www.example.edu/',
+  'organization_name' => 'Your Student Government',
+  'organization_url'  => 'http://www.example.com/',
+);
+
+/*
+|--------------------------------------------------------------------------
 | Amazon API Requests Per Cron Run
 |--------------------------------------------------------------------------
 |

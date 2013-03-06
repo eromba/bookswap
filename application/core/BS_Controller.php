@@ -25,13 +25,41 @@ class BS_Controller extends CI_Controller {
     }
   }
 
-  public function render_page($view, $data) {
-    $data['user'] = $this->user;
-    $data['logged_in'] = ($this->user != NULL);
+  public function render_page($view, $data = array(), $modals = array()) {
+    $ui_strings = $this->config->item('ui_strings');
+    $data = array_merge($data, $ui_strings);
 
-    $this->load->view('header', $data);
-    $this->load->view($view, $data);
-    $this->load->view('footer', $data);
+    $title_prefix = $ui_strings['site_name'] . ' | ';
+    if (isset($data['head_title'])) {
+      $data['head_title'] = $title_prefix . $data['head_title'];
+    }
+    else {
+      $data['head_title'] = $title_prefix . $ui_strings['university_name'];
+    }
+
+    $data['user'] = $this->user;
+
+    $logged_in = ($this->user != NULL);
+    $data['logged_in'] = $logged_in;
+
+    $body_classes = ($logged_in) ? 'logged-in' : 'logged-out';
+    $body_classes .= ' ' . $view;
+    $data['body_classes'] = $body_classes;
+
+    $data['navbar'] = $this->load->view('navbar', $data, TRUE);
+    $data['header'] = $this->load->view('header', $data, TRUE);
+    $data['footer'] = $this->load->view('footer', $data, TRUE);
+
+    $data['modals'] = '';
+    $modals[] = 'about';
+    $modals[] = 'login';
+    foreach ($modals as $modal) {
+      $data['modals'] .= $this->load->view('modals/' . $modal, $data, TRUE);
+    }
+
+    $data['content'] = $this->load->view($view, $data, TRUE);
+
+    $this->load->view('html', $data);
   }
 
   /**

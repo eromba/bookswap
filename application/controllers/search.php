@@ -3,8 +3,8 @@
 class Search extends BS_Controller {
 
   public function index() {
-    $data['title'] = 'Home';
-    $this->render_page('index', $data);
+    $modals = array('how_it_works');
+    $this->render_page('front', array(), $modals);
   }
 
   public function results() {

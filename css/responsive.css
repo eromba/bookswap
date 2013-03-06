@@ -1,0 +1,100 @@
+/**
+ * Smartphone sizes and down
+ */
+@media only screen and (max-width: 480px) {
+
+  .footer-text {
+    text-align: center;
+  }
+
+  #footer .org-logo {
+    display: none;
+  }
+
+}
+
+/**
+ * Portrait tablet and down
+ */
+@media only screen and (max-width: 767px) {
+
+   /* Override extra body padding from Twitter Bootstrap */
+  
+  body {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Hide univeristy logo in footer */
+
+  #footer {
+    text-align: center;
+  }
+  #footer .container {
+    display: inline-block;
+    text-align: left;
+    width: auto;
+  }
+  .footer-inner {
+    display: inline-table;
+  }
+  #footer .university-logo {
+    display: none;
+  }
+
+}
+
+/**
+ * Landscape tablet sizes and up
+ */
+@media only screen and (min-width: 768px) {
+
+  #page > * {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+
+}
+
+/**
+ * Landscape tablets only
+ */
+@media (min-width: 768px) and (max-width: 979px) {
+
+  .navbar-static-top .container {
+    width: 724px;
+  }
+
+}
+
+/**
+ * Landscape tablets and down
+ */
+@media only screen and (max-width: 979px) {
+
+}
+
+/**
+ * Desktops
+ */
+@media only screen and (min-width: 980px) {
+
+  .navbar-static-top .container {
+    width: 940px;
+  }
+
+}
+
+/**
+ * Large Desktop
+ */
+@media only screen and (min-width: 1200px) {
+
+  #secondary-menu-bar .brand {
+    margin-left: 0;
+  }
+  .navbar-static-top .container {
+    width: 1160px;
+  }
+
+}
