@@ -5,7 +5,7 @@ class Posts extends BS_Controller {
   public function __construct() {
     parent::__construct();
     if ( ! $this->user) {
-      show_error('Please <a href="' . base_url('login') . '">log in</a> to access this page.', 401);
+      redirect(base_url('login'));
     }
   }
 

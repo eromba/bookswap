@@ -70,11 +70,11 @@ print form_open(uri_string(), array(
     </tr>
     <tr>
       <td class="vendor"><?php print $bookstore_name; ?></td>
-      <td class="price"><?php print ($book->bookstore_price) ? '$' . $book->bookstore_price : '(Unavailable)'?></td>
+      <td class="price"><?php print ($book->bookstore_new_price) ? '$' . $book->bookstore_new_price : '(Unavailable)'?></td>
     </tr>
     <tr>
       <td class="vendor">Amazon.com</td>
-      <td class="price"><?php print ($book->amzn_new_price) ? '$' . $book->amzn_new_price : '(Unavailable)'?></td>
+      <td class="price"><?php print ($book->amazon_new_price) ? '$' . $book->amazon_new_price : '(Unavailable)'?></td>
     </tr>
   </table>
   <div class="control-group">

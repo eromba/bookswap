@@ -38,7 +38,16 @@
           </div>
         </div>
         <div class="courses">
-          Required for: <span class="course"><?php print $book->subject . ' ' . $book->course;?></span>
+          <?php foreach ($book->courses as $course_type => $courses) { ?>
+          <?php if ($courses) { ?>
+            <?php print $course_type; ?> for:
+            <ul>
+              <?php foreach ($courses as $course) { ?>
+                <li class="course"><?php print $course->name . ', Section ' . $course->section;?></li>
+              <?php } ?>
+            </ul>
+            <?php } ?>
+          <?php } ?>
         </div>
       </div>
 
@@ -155,8 +164,8 @@
               <tbody>
                 <tr class="bookstore-offer">
                   <td class="seller"><?php print $bookstore_name; ?></td>
-                  <?php if ($book->bookstore_price != 0) { ?>
-                    <td class="price">$<?php print $book->bookstore_price; ?></td>
+                  <?php if ($book->bookstore_new_price != 0) { ?>
+                    <td class="price">$<?php print $book->bookstore_new_price; ?></td>
                     <td class="action">
                       <a class="btn" href="<?php print $bookstore_url; ?>"><i class="icon-shopping-cart"></i> Buy from Bookstore</a>
                     </td>
@@ -169,10 +178,10 @@
                 </tr>
                 <tr class="amazon-offer">
                   <td class="seller">Amazon.com</td>
-                  <?php if ($book->amzn_new_price != 0) { ?>
-                    <td class="price">$<?php print $book->amzn_new_price; ?></td>
+                  <?php if ($book->amazon_new_price != 0) { ?>
+                    <td class="price">$<?php print $book->amazon_new_price; ?></td>
                     <td class="action">
-                      <a class="btn" href="<?php print $book->amzn_link; ?>"><i class="icon-shopping-cart"></i> Buy from Amazon</a>
+                      <a class="btn" href="<?php print $book->amazon_url; ?>"><i class="icon-shopping-cart"></i> Buy from Amazon</a>
                     </td>
                   <?php } else { ?>
                     <td class="price">(Not available)</td>

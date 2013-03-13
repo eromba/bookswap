@@ -193,6 +193,10 @@
   width: 255px;
 }
 
+.book .courses ul:last-child {
+  margin-bottom: 0;
+}
+
 .book .course {
   font-weight: bold;
 }

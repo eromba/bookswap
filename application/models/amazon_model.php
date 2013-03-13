@@ -66,21 +66,29 @@ class Amazon_model extends CI_Model {
     $book_results = $amazon_data->xpath('Items/Item');
     $books = array();
     foreach ($book_results as $book_result) {
-      $isbn            = (string) $book_result->ItemAttributes->EAN;
-      $title           = $book_result->ItemAttributes->Title;
-      $image_url       = $book_result->MediumImage->URL;
-      $amzn_link       = $book_result->DetailPageURL;
-      $amzn_list_price = $book_result->ItemAttributes->ListPrice->Amount;
-      $amzn_new_price  = $book_result->OfferSummary->LowestNewPrice->Amount;
-      $amzn_used_price = $book_result->OfferSummary->LowestUsedPrice->Amount;
+      $isbn              = (string) $book_result->ItemAttributes->EAN;
+      $title             = $book_result->ItemAttributes->Title;
+      $edition           = $book_result->ItemAttributes->Edition;
+      $publisher         = $book_result->ItemAttributes->Publisher;
+      $publication_date  = $book_result->ItemAttributes->PublicationDate;
+      $binding           = $book_result->ItemAttributes->Binding;
+      $image_url         = $book_result->MediumImage->URL;
+      $amazon_url        = $book_result->DetailPageURL;
+      $amazon_list_price = $book_result->ItemAttributes->ListPrice->Amount;
+      $amazon_new_price  = $book_result->OfferSummary->LowestNewPrice->Amount;
+      $amazon_used_price = $book_result->OfferSummary->LowestUsedPrice->Amount;
       $books[$isbn] = array(
-        'isbn'            => $isbn,
-        'title'           => ($title)           ? (string) $title                  : NULL,
-        'image_url'       => ($image_url)       ? (string) $image_url              : NULL,
-        'amzn_link'       => ($amzn_link)       ? (string) $amzn_link              : NULL,
-        'amzn_list_price' => ($amzn_list_price) ? ((float) $amzn_list_price / 100) : NULL,
-        'amzn_new_price'  => ($amzn_new_price)  ? ((float) $amzn_new_price  / 100) : NULL,
-        'amzn_used_price' => ($amzn_used_price) ? ((float) $amzn_used_price / 100) : NULL,
+        'isbn'              => $isbn,
+        'title'             => ($title)             ? (string) $title                    : NULL,
+        'edition'           => ($edition)           ? (string) $edition                  : NULL,
+        'publisher'         => ($publisher)         ? (string) $publisher                : NULL,
+        'publication_date'  => ($publication_date)  ? (string) $publication_date         : NULL,
+        'binding'           => ($binding)           ? (string) $binding                  : NULL,
+        'image_url'         => ($image_url)         ? (string) $image_url                : NULL,
+        'amazon_url'        => ($amazon_url)        ? (string) $amazon_url               : NULL,
+        'amazon_list_price' => ($amazon_list_price) ? ((float) $amazon_list_price / 100) : NULL,
+        'amazon_new_price'  => ($amazon_new_price)  ? ((float) $amazon_new_price  / 100) : NULL,
+        'amazon_used_price' => ($amazon_used_price) ? ((float) $amazon_used_price / 100) : NULL,
       );
     }
     return $books;
