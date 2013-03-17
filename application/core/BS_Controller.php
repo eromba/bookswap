@@ -69,7 +69,11 @@ class BS_Controller extends CI_Controller {
    */
   public function _output($output) {
     if ($this->set_last_page) {
-      $this->session->set_userdata('last_page', current_url());
+      $url = current_url();
+      if ($_SERVER['QUERY_STRING']) {
+        $url = $url . '?' . $_SERVER['QUERY_STRING'];
+      }
+      $this->session->set_userdata('last_page', $url);
     }
     echo $output;
   }
