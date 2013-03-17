@@ -1,3 +1,5 @@
+(function(window, $, undefined) {
+
 /**
  * CodeIgniter's CSRF cookie must be sent with each AJAX request.
  */
@@ -43,3 +45,5 @@ $(function() {
           .toggleClass('success', v.valid);
     });
 });
+
+})(window, jQuery);
