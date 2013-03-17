@@ -51,7 +51,8 @@ class User_model extends CI_Model {
 
     if (isset($options['uid']) || isset($options['netid'])) {
       return $query->row(0);
-    } else {
+    }
+    else {
       return $query->result();
     }
   }
