@@ -20,6 +20,7 @@ class BS_Controller extends CI_Controller {
     $this->load->vars(array(
       'user' => $this->user,
       'logged_in' => ($this->user != NULL),
+      'book_conditions' => $this->config->item('book_conditions'),
     ));
     $this->load->vars($this->config->item('ui_strings'));
   }

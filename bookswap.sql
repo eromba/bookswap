@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `bid` int(11) NOT NULL,
   `notes` text,
   `edition` varchar(7) NOT NULL,
-  `condition` enum('Very Good','Good','Ok','Poor') NOT NULL DEFAULT 'Ok',
+  `condition` tinyint(4) NOT NULL,
   `active` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

@@ -25,3 +25,20 @@ $config['ui_strings'] = array(
 |
 */
 $config['amazon_requests_per_cron'] = 5;
+
+/*
+|--------------------------------------------------------------------------
+| Book Conditions
+|--------------------------------------------------------------------------
+|
+| Indexed array of strings that users can use to specify the condition of
+| their books. The indices of this array are used as values for the
+| "condition" column in the "posts" database table.
+|
+*/
+$config['book_conditions'] = array(
+  1 => 'Like New',
+  2 => 'Very Good',
+  3 => 'Good',
+  4 => 'Acceptable',
+);
