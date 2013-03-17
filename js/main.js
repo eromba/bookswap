@@ -1,3 +1,10 @@
+/**
+ * CodeIgniter's CSRF cookie must be sent with each AJAX request.
+ */
+var settings = { 'data': {} };
+settings['data'][BOOKSWAP.csrf_token_name] = $.cookie(BOOKSWAP.csrf_cookie_name);
+$.ajaxSetup(settings);
+
 $(function() {
   // When the page loads, focus the search bar
   // and set the insertion pointer to the end of the search query.

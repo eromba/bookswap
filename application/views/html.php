@@ -42,12 +42,21 @@
 
     <?php print $modals; ?>
 
+    <script>
+      window.BOOKSWAP = {
+        'base_url': '<?php print base_url(); ?>',
+        'csrf_token_name': '<?php print $this->config->item('csrf_token_name'); ?>',
+        'csrf_cookie_name': '<?php print $this->config->item('csrf_cookie_name'); ?>'
+      };
+    </script>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="<?php base_url('js/jquery-1.9.1.min.js'); ?>"><\/script>')</script>
 
     <script src="<?php print base_url('js/bootstrap.min.js'); ?>"></script>
     <script src="<?php print base_url('js/jquery.placeholder.min.js'); ?>"></script>
     <script src="<?php print base_url('js/jquery.h5validate.min.js'); ?>"></script>
+    <script src="<?php print base_url('js/jquery.cookie.min.js'); ?>"></script>
     <script src="<?php print base_url('js/main.js'); ?>"></script>
 
     <script>
