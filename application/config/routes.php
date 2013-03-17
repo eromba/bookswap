@@ -49,7 +49,9 @@ $route['search'] = 'search/results';
 $route['sell/(:num)']     = 'posts/create_post/$1';
 $route['my-posts/(:num)'] = 'posts/update_post/$1';
 $route['my-posts']        = 'posts/user_posts';
-$route['myposts/deactivate'] = 'posts/deactivate_post';
+
+// REST API
+$route['api/v1/posts/(:num)'] = 'rest/post/$1';
 
 // User Authentication
 $route['login'] = 'user/login';
