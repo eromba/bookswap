@@ -8,7 +8,7 @@ class Search extends BS_Controller {
   }
 
   public function results() {
-    $query = $this->input->get('q');
+    $query = $this->input->get('q', TRUE);
     if (empty($query)) {
       redirect($this->get_last_page());
     }
