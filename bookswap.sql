@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `notes` text,
   `edition` varchar(7) NOT NULL,
   `condition` enum('Very Good','Good','Ok','Poor') NOT NULL DEFAULT 'Ok',
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `active` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

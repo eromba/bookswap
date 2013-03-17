@@ -14,18 +14,6 @@ class Search extends BS_Controller {
     }
 
     $books = $this->fetch_books($query);
-    foreach ($books as $book) {
-      if ($book->stock >= 1) {
-        $book->posts = $this->post_model->get_active_posts(array('bid' => $book->bid));
-        foreach ($book->posts as $post) {
-          $post->user = $this->user_model->get_users(array('uid' => $post->uid));
-        }
-        $book->min_price = $this->post_model->get_min_price($book->bid);
-      }
-      else {
-        $book->posts = array();
-      }
-    }
 
     $data = array(
       'query' => $query,

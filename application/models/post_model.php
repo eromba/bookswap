@@ -2,10 +2,6 @@
 
 class Post_model extends CI_Model {
 
-  // Values for "status" column in posts table.
-  const ACTIVE = 1;
-  const DEACTIVATED = 0;
-
   /**
    * Creates a new post in the database.
    *
@@ -18,8 +14,8 @@ class Post_model extends CI_Model {
    * @return int insert_id() The ID of the inserted post, or false on error
    */
   public function add_post($options = array()) {
-    $requiredColumns = array('uid', 'bid', 'price');
-    foreach ($requiredColumns as $column) {
+    $required_columns = array('uid', 'bid', 'price');
+    foreach ($required_columns as $column) {
       if ( ! isset($options[$column])) {
         return false;
       }
@@ -48,12 +44,12 @@ class Post_model extends CI_Model {
   /**
    * Retrieves posts from the database.
    *
-   * @param array $options Array of query conditions (pid, uid, bid)
+   * @param array $options Array of query conditions (pid, uid, bid, active)
    * @return array result() Array of post objects, or a single post object if
    *                        a pid is specified
    */
   public function get_posts($options = array()) {
-    $valid_columns = array('pid', 'uid', 'bid', 'status');
+    $valid_columns = array('pid', 'uid', 'bid', 'active');
     foreach ($valid_columns as $column) {
       if (isset($options[$column])) {
         $this->db->where($column, $options[$column]);
@@ -67,17 +63,6 @@ class Post_model extends CI_Model {
     } else {
       return $query->result();
     }
-  }
-
-  /**
-   * Retrieves active posts from the database.
-   *
-   * @param array $options Array of query conditions (pid, uid, bid)
-   * @return array result() Array of post objects
-   */
-  public function get_active_posts($options = array()) {
-    $options['status'] = self::ACTIVE;
-    return $this->get_posts($options);
   }
 
   /**
@@ -106,7 +91,7 @@ class Post_model extends CI_Model {
     }
     $this->db->where('pid', $options['pid']);
 
-    $valid_columns = array('price', 'notes', 'edition', 'condition', 'status');
+    $valid_columns = array('price', 'notes', 'edition', 'condition', 'active');
     foreach ($valid_columns as $column) {
       if (isset($options[$column])) {
         $this->db->set($column, $options[$column]);
@@ -116,17 +101,6 @@ class Post_model extends CI_Model {
     $this->db->update('posts');
 
     return $this->db->affected_rows();
-  }
-
-  public function deactivate_post($pid) {
-    if ( ! isset($pid)) {
-      return false;
-    }
-
-    return $this->update_post(array(
-        'pid' => $pid,
-        'status' => self::DEACTIVATED,
-    ));
   }
 
 }

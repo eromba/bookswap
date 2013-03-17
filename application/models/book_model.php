@@ -3,18 +3,54 @@
 class Book_model extends CI_Model {
 
   /**
+   * Retrieves books from the database.
+   *
+   * @param array $options Array of query conditions
+   * @return array result() Array of book objects, or a single book object if
+   *                        a bid or isbn is specified
+   */
+  public function get_books($options = array()) {
+    $valid_columns = array('bid', 'isbn');
+    foreach ($valid_columns as $column) {
+      if (isset($options[$column])) {
+        $this->db->where($column, $options[$column]);
+      }
+    }
+
+    $query = $this->db->get('books');
+
+    $books = $query->result();
+
+    foreach ($books as &$book) {
+      $book->posts = $this->post_model->get_posts(array(
+        'bid' => $book->bid,
+        'active' => TRUE,
+      ));
+      foreach ($book->posts as $post) {
+        $post->user = $this->user_model->get_users(array('uid' => $post->uid));
+      }
+      $book->min_student_price = $this->post_model->get_min_price($book->bid);
+    }
+
+    if (isset($options['bid']) || isset($options['isbn'])) {
+      return $books[0];
+    }
+    else {
+      return $books;
+    }
+  }
+
+  /**
    * Retrieves books from the database that match the given string.
    *
    * @param string $string The string to search by
    * @return array Array of book objects
    */
   public function get_books_by_string($string) {
-    $this->db->from('books');
-    $query = $this->db->like('subj_class', $string);
-    $query = $this->db->or_like('title', $string);
-    $query = $this->db->or_like('subject', $string);
-    $query = $this->db->get();
-    return $query->result();
+    $this->db->like('subj_class', $string);
+    $this->db->or_like('title', $string);
+    $this->db->or_like('subject', $string);
+    return $this->get_books();
   }
 
   /**
