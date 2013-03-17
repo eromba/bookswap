@@ -31,6 +31,7 @@
             <?php if (isset($title)) { ?>
               <h1 id="page-title"><?php print $title; ?></h1>
             <?php } ?>
+            <?php print $messages; ?>
             <?php print $content; ?>
           </div>
         </div>

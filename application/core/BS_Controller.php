@@ -65,9 +65,30 @@ class BS_Controller extends CI_Controller {
       $data['modals'] .= $this->load->view('modals/' . $modal, $data, TRUE);
     }
 
+    $messages = $this->session->userdata('messages');
+    if ($messages) {
+      $data['messages'] = $this->load->view('messages', array('messages' => $messages), TRUE);
+    }
+    else {
+      $data['messages'] = '';
+    }
+    $this->session->unset_userdata('messages');
+
     $data['content'] = $this->load->view($view, $data, TRUE);
 
     $this->load->view('html', $data);
+  }
+
+  public function set_message($message, $type = 'success') {
+    $messages = $this->session->userdata('messages');
+    if ( ! $messages) { 
+      $messages = array();
+    }
+    $messages[] = array(
+      'text' => $message,
+      'type' => $type,
+    );
+    $this->session->set_userdata('messages', $messages);
   }
 
   /**
