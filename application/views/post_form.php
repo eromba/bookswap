@@ -1,5 +1,5 @@
 <?php
-print form_open(uri_string(), array(
+print form_open(base_url(uri_string()), array(
   'id' => 'post-form',
   'class' => 'form-horizontal',
 ));

@@ -1,6 +1,6 @@
 <div id="search-bar">
   <?php
-    print form_open('search', array(
+    print form_open(base_url('search'), array(
       'class' => 'form-inline',
       'method' => 'get',
     ));
