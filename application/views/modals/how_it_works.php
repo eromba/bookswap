@@ -20,7 +20,7 @@
       <li>Enter the required information and click "Submit".</li>
       <li>That's it! Other students can now see your post.</li>
     </ol>
-    <p>You can modify or remove your posts at any time by visiting the <a href="<?php print base_url('myposts'); ?>">My Posts</a> page.</p>
+    <p>You can modify or remove your posts at any time by visiting the <a href="<?php print base_url('my-posts'); ?>">My Posts</a> page.</p>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

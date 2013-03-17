@@ -48,7 +48,7 @@ $route['search'] = 'search/results';
 // User Posts
 $route['sell/(:num)']     = 'posts/create_post/$1';
 $route['my-posts/(:num)'] = 'posts/update_post/$1';
-$route['myposts'] = 'posts/my_posts';
+$route['my-posts']        = 'posts/user_posts';
 $route['myposts/deactivate'] = 'posts/deactivate_post';
 
 // User Authentication

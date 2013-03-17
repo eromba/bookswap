@@ -9,17 +9,26 @@ class Posts extends BS_Controller {
     }
   }
 
-  public function my_posts() {
-    if ($this->user) {
-      $data['user'] = $this->user;
-      $data['posts'] = $this->post_model->get_posts(array('uid' => $this->user->uid));
-      foreach ($data['posts'] as $post) {
-        $post->book = $this->book_model->get_books_by_id($post->bid);
-        $post->book = $post->book[0];
+  public function user_posts() {
+    $active_posts = array();
+    $deactivated_posts = array();
+    $posts = $this->post_model->get_posts(array('uid' => $this->user->uid));
+    foreach ($posts as $post) {
+      $post->book = $this->book_model->get_books(array('bid' => $post->bid));
+      if ($post->active) {
+        $active_posts[] = $post;
+      }
+      else {
+        $deactivated_posts[] = $post;
       }
     }
-    $data['title'] = 'My Posts';
-    $this->render_page('my_posts', $data);
+    $data = array(
+      'title' => 'My Posts',
+      'active_posts' => $this->load->view('posts', array('posts' => $active_posts), TRUE),
+      'deactivated_posts' => $this->load->view('posts', array('posts' => $deactivated_posts), TRUE),
+    );
+    $modals = array('deactivate_post');
+    $this->render_page('user_posts', $data, $modals);
   }
 
   public function create_post($bid) {
