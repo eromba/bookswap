@@ -18,6 +18,37 @@
   text-align: center;
 }
 
+/* Search Input */
+
+#header #search-bar {
+  margin-top: -16px;
+  position: absolute;
+  right: 25px;
+  top: 50%;
+}
+
+#header #search-bar form {
+  margin-bottom: 0;
+}
+
+#search-input,
+#search-button {
+  font-size: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#search-input {
+  width: 400px;
+  padding-left: 9px;
+  padding-right: 9px;
+}
+
+#search-button {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 /**
  * Front Page
  */
@@ -54,28 +85,8 @@
   text-align: center;
 }
 
-/* Search Input */
-
-#search-bar form {
+.front #search-bar form {
   margin-bottom: 30px;
-}
-
-#search-input,
-#search-button {
-  font-size: 16px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-#search-input {
-  width: 400px;
-  padding-left: 9px;
-  padding-right: 9px;
-}
-
-#search-button {
-  padding-left: 30px;
-  padding-right: 30px;
 }
 
 /**

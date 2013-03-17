@@ -47,9 +47,12 @@ class BS_Controller extends CI_Controller {
     $body_classes .= ' ' . str_replace('_', '-', $view);
     $data['body_classes'] = $body_classes;
 
-    $data['navbar'] = $this->load->view('navbar', $data, TRUE);
-    $data['header'] = $this->load->view('header', $data, TRUE);
-    $data['footer'] = $this->load->view('footer', $data, TRUE);
+    $data['is_front_page'] = ($view == 'front');
+
+    $data['search_bar'] = $this->load->view('search_bar', $data, TRUE);
+    $data['navbar']     = $this->load->view('navbar', $data, TRUE);
+    $data['header']     = $this->load->view('header', $data, TRUE);
+    $data['footer']     = $this->load->view('footer', $data, TRUE);
 
     $data['modals'] = '';
     $modals[] = 'about';

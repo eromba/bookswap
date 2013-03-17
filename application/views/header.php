@@ -6,4 +6,5 @@
       </a>
     </div>
   </div>
+  <?php if ( ! $is_front_page) { print $search_bar; } ?>
 </header>
