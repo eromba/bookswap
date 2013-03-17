@@ -48,6 +48,10 @@ class Post_model extends CI_Model {
       }
     }
 
+    if (isset($options['order_by'])) {
+      $this->db->order_by($options['order_by']);
+    }
+
     $query = $this->db->get('posts');
 
     if (isset($options['pid'])) {

@@ -26,6 +26,7 @@ class Book_model extends CI_Model {
       $book->posts = $this->post_model->get_posts(array(
         'bid' => $book->bid,
         'active' => TRUE,
+        'order_by' => 'price asc',
       ));
       foreach ($book->posts as $post) {
         $post->user = $this->user_model->get_users(array('uid' => $post->uid));
