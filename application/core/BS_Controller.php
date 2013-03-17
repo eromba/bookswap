@@ -14,6 +14,14 @@ class BS_Controller extends CI_Controller {
     parent::__construct();
     $this->config->load('bookswap');
     $this->user = $this->session->userdata('bookswap_user');
+
+    // Give all views access to user-related variables
+    // and configured UI strings.
+    $this->load->vars(array(
+      'user' => $this->user,
+      'logged_in' => ($this->user != NULL),
+    ));
+    $this->load->vars($this->config->item('ui_strings'));
   }
 
   public function get_last_page() {
@@ -27,8 +35,6 @@ class BS_Controller extends CI_Controller {
 
   public function render_page($view, $data = array(), $modals = array()) {
     $ui_strings = $this->config->item('ui_strings');
-    $data = array_merge($data, $ui_strings);
-
     $title_prefix = $ui_strings['site_name'] . ' | ';
     if (isset($data['head_title'])) {
       $data['head_title'] = $title_prefix . $data['head_title'];
@@ -37,13 +43,8 @@ class BS_Controller extends CI_Controller {
       $data['head_title'] = $title_prefix . $ui_strings['university_name'];
     }
 
-    $data['user'] = $this->user;
-
-    $logged_in = ($this->user != NULL);
-    $data['logged_in'] = $logged_in;
-
-    $body_classes = ($logged_in) ? 'logged-in' : 'logged-out';
-    $body_classes .= ' ' . $view;
+    $body_classes = ($this->user != NULL) ? 'logged-in' : 'logged-out';
+    $body_classes .= ' ' . str_replace('_', '-', $view);
     $data['body_classes'] = $body_classes;
 
     $data['navbar'] = $this->load->view('navbar', $data, TRUE);
