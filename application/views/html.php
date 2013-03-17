@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width">
 
     <link rel="stylesheet" href="<?php print base_url('css/bootstrap.min.css'); ?>">
+    <link rel="stylesheet" href="<?php print base_url('css/jquery.placeholder.css'); ?>">
     <link rel="stylesheet" href="<?php print base_url('css/base.css'); ?>">
     <link rel="stylesheet" href="<?php print base_url('css/content.css'); ?>">
     <link rel="stylesheet" href="<?php print base_url('css/responsive.css'); ?>">
@@ -41,6 +42,7 @@
     <script>window.jQuery || document.write('<script src="<?php base_url('js/jquery-1.9.1.min.js'); ?>"><\/script>')</script>
 
     <script src="<?php print base_url('js/bootstrap.min.js'); ?>"></script>
+    <script src="<?php print base_url('js/jquery.placeholder.min.js'); ?>"></script>
     <script src="<?php print base_url('js/main.js'); ?>"></script>
 
     <script>

@@ -44,6 +44,10 @@
   padding-right: 9px;
 }
 
+#search-bar span.placeholder {
+  font-size: 16px;
+}
+
 #search-button {
   padding-left: 30px;
   padding-right: 30px;
