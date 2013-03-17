@@ -29,6 +29,7 @@ class Book_model extends CI_Model {
       foreach ($book->posts as $post) {
         $post->user = $this->user_model->get_users(array('uid' => $post->uid));
       }
+      $book->num_posts = count($book->posts);
       $book->min_student_price = $this->post_model->get_min_price($book->bid);
     }
 
