@@ -9,8 +9,11 @@ $config['ui_strings'] = array(
   'site_name'         => 'BookSwap',
   'university_name'   => 'Your University',
   'university_url'    => 'http://www.example.edu/',
+  'university_abbr'   => 'YU',
   'organization_name' => 'Your Student Government',
   'organization_url'  => 'http://www.example.com/',
+  'bookstore_name'    => 'Campus Bookstore',
+  'bookstore_url'     => 'http://www.example.com/',
 );
 
 /*

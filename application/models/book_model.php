@@ -22,15 +22,27 @@ class Book_model extends CI_Model {
     $books = $query->result();
 
     foreach ($books as &$book) {
+      $book->user_pid = NULL;
       $book->posts = $this->post_model->get_posts(array(
         'bid' => $book->bid,
         'active' => TRUE,
       ));
       foreach ($book->posts as $post) {
         $post->user = $this->user_model->get_users(array('uid' => $post->uid));
+        if ($this->user && ($post->user->uid == $this->user->uid)) {
+          $book->user_pid = $post->pid;
+        }
       }
       $book->num_posts = count($book->posts);
       $book->min_student_price = $this->post_model->get_min_price($book->bid);
+      $book->min_store_price = min($book->bookstore_price, $book->amzn_new_price);
+      $book->num_store_offers = 0;
+      if ($book->bookstore_price != 0) {
+        $book->num_store_offers++;
+      }
+      if ($book->amzn_new_price != 0) {
+        $book->num_store_offers++;
+      }
     }
 
     if (isset($options['bid']) || isset($options['isbn'])) {

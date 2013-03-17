@@ -39,4 +39,9 @@ $(function() {
     $('#login-modal').modal('show');
     event.preventDefault();
   });
+
+  $('td.more-info-button a').click(function(event) {
+    $(this).find('i').toggleClass('icon-plus icon-minus');
+    event.preventDefault();
+  });
 });

@@ -15,12 +15,16 @@ class Search extends BS_Controller {
 
     $books = $this->fetch_books($query);
 
+    $query_html = htmlentities($query);
     $data = array(
-      'query' => $query,
+      'head_title' => $query_html,
+      'query' => $query_html,
       'books' => $books,
-      'title' => 'Results',
+      'num_results' => count($books),
     );
-    $this->render_page('search_results', $data);
+    $data['results'] = $this->load->view('search_results', $data, TRUE);
+
+    $this->render_page('search', $data);
   }
 
   /**
