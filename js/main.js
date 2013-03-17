@@ -44,4 +44,14 @@ $(function() {
     $(this).find('i').toggleClass('icon-plus icon-minus');
     event.preventDefault();
   });
+
+  // Toggle Bootstrap form-validation classes when form fields are validated.
+  $('#post-form')
+    .h5Validate()
+    .on('validated', function(event, v) {
+      $(v.element)
+        .parents('.control-group')
+          .toggleClass('error', ( ! v.valid))
+          .toggleClass('success', v.valid);
+    });
 });

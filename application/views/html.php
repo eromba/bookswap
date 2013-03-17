@@ -47,6 +47,7 @@
 
     <script src="<?php print base_url('js/bootstrap.min.js'); ?>"></script>
     <script src="<?php print base_url('js/jquery.placeholder.min.js'); ?>"></script>
+    <script src="<?php print base_url('js/jquery.h5validate.min.js'); ?>"></script>
     <script src="<?php print base_url('js/main.js'); ?>"></script>
 
     <script>
