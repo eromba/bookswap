@@ -436,6 +436,85 @@ a.sell-your-copy i {
 }
 
 /**
+ * Post Form
+ */
+
+#post-form {
+  counter-reset: legend;
+  margin-bottom: 0;
+}
+
+#post-form .book {
+  margin: 30px auto 20px;
+  width: 560px;
+}
+
+#post-form legend:before {
+  border: 1px solid #DDD;
+  -webkit-border-radius: 20px;
+          border-radius: 20px;
+  color: #AAA;
+  counter-increment: legend;
+  content: counter(legend);
+  display: block;
+  float: left;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 4px;
+  margin-right: 10px;
+  text-align: center;
+  width: 30px;
+}
+
+#post-form legend+.control-group {
+  -webkit-margin-top-collapse: collapse;
+}
+
+#post-form .control-label {
+  width: 35%;
+}
+
+#post-form .controls {
+  margin-left: 35%;
+  padding-left: 20px;
+}
+
+#lowest-prices {
+  float: right;
+  margin-bottom: 0;
+  margin: 0 20px;
+  width: 250px;
+}
+
+#lowest-prices caption {
+  overflow: auto;
+}
+
+#lowest-prices caption h4 {
+  margin-top: 0;
+}
+
+#lowest-prices caption,
+#lowest-prices .price {
+  font-weight: bold;
+}
+
+#post-form .form-actions {
+  padding-left: 35%;
+  margin-bottom: 0;
+}
+
+#post-form .form-actions > *:first-child {
+  margin-left: 20px;
+}
+
+.control-group.success .control-label,
+.control-group.success .help-block,
+.control-group.success .help-inline {
+  color: inherit;
+}
+
+/**
  * About this Site Modal
  */
 

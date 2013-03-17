@@ -46,8 +46,8 @@ $route['404_override'] = '';
 $route['search'] = 'search/results';
 
 // User Posts
-$route['post_book'] = 'posts/post_book';
-$route['update_post'] = 'posts/update_post';
+$route['sell/(:num)']     = 'posts/create_post/$1';
+$route['my-posts/(:num)'] = 'posts/update_post/$1';
 $route['myposts'] = 'posts/my_posts';
 $route['myposts/deactivate'] = 'posts/deactivate_post';
 
