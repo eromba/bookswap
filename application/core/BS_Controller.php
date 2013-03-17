@@ -40,6 +40,9 @@ class BS_Controller extends CI_Controller {
     if (isset($data['head_title'])) {
       $data['head_title'] = $title_prefix . $data['head_title'];
     }
+    elseif (isset($data['title'])) {
+      $data['head_title'] = $title_prefix . $data['title'];
+    }
     else {
       $data['head_title'] = $title_prefix . $ui_strings['university_name'];
     }

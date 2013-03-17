@@ -30,6 +30,10 @@
           box-shadow: none;
 }
 
+#page-title {
+  margin-bottom: 20px;
+}
+
 /* Search Input */
 
 #header #search-bar {
