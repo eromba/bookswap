@@ -34,6 +34,17 @@ class BS_Controller extends CI_Controller {
     }
   }
 
+  /**
+   * Loads the given partial view.
+   * 
+   * @param string $modal The name of the partial view to load
+   * @param array $data (optional) Data to pass to the view
+   * @return string The rendered partial view
+   */
+  public function load_partial($partial, $data = array()) {
+    return $this->load->view('partials/' . $partial, $data, TRUE);
+  }
+
   public function render_page($view, $data = array(), $modals = array()) {
     $this->load->helper('form');
 
@@ -55,10 +66,10 @@ class BS_Controller extends CI_Controller {
 
     $data['is_front_page'] = ($view == 'front');
 
-    $data['search_bar'] = $this->load->view('search_bar', $data, TRUE);
-    $data['navbar']     = $this->load->view('navbar', $data, TRUE);
-    $data['header']     = $this->load->view('header', $data, TRUE);
-    $data['footer']     = $this->load->view('footer', $data, TRUE);
+    $data['search_bar'] = $this->load_partial('search_bar', $data);
+    $data['navbar']     = $this->load_partial('navbar', $data);
+    $data['header']     = $this->load_partial('header', $data);
+    $data['footer']     = $this->load_partial('footer', $data);
 
     $data['modals'] = '';
     $modals[] = 'about';
@@ -69,14 +80,14 @@ class BS_Controller extends CI_Controller {
 
     $messages = $this->session->userdata('messages');
     if ($messages) {
-      $data['messages'] = $this->load->view('messages', array('messages' => $messages), TRUE);
+      $data['messages'] = $this->load_partial('messages', array('messages' => $messages));
     }
     else {
       $data['messages'] = '';
     }
     $this->session->unset_userdata('messages');
 
-    $data['content'] = $this->load->view($view, $data, TRUE);
+    $data['content'] = $this->load->view('pages/' . $view, $data, TRUE);
 
     $this->load->view('html', $data);
   }

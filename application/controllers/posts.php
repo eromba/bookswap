@@ -24,8 +24,8 @@ class Posts extends BS_Controller {
     }
     $data = array(
       'title' => 'My Posts',
-      'active_posts' => $this->load->view('posts', array('posts' => $active_posts), TRUE),
-      'deactivated_posts' => $this->load->view('posts', array('posts' => $deactivated_posts), TRUE),
+      'active_posts' => $this->load_partial('posts', array('posts' => $active_posts)),
+      'deactivated_posts' => $this->load_partial('posts', array('posts' => $deactivated_posts)),
     );
     $modals = array('deactivate_post');
     $this->render_page('user_posts', $data, $modals);

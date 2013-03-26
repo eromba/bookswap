@@ -22,7 +22,7 @@ class Search extends BS_Controller {
       'books' => $books,
       'num_results' => count($books),
     );
-    $data['results'] = $this->load->view('search_results', $data, TRUE);
+    $data['results'] = $this->load_partial('search_results', $data);
 
     $this->render_page('search', $data);
   }
