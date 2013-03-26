@@ -35,6 +35,8 @@ class BS_Controller extends CI_Controller {
   }
 
   public function render_page($view, $data = array(), $modals = array()) {
+    $this->load->helper('form');
+
     $ui_strings = $this->config->item('ui_strings');
     $title_prefix = $ui_strings['site_name'] . ' | ';
     if (isset($data['head_title'])) {
