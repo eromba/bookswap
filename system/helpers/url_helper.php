@@ -588,5 +588,7 @@ if ( ! function_exists('_parse_attributes'))
 		return $att;
 	}
 }
+
+
 /* End of file url_helper.php */
 /* Location: ./system/helpers/url_helper.php */
