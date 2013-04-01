@@ -57,13 +57,13 @@ CREATE TABLE IF NOT EXISTS `departments` (
 CREATE TABLE IF NOT EXISTS `posts` (
   `pid` int(11) NOT NULL AUTO_INCREMENT,
   `price` int(11) NOT NULL,
-  `postdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `uid` int(11) NOT NULL,
   `bid` int(11) NOT NULL,
   `notes` text CHARACTER SET utf8 NOT NULL,
   `edition` varchar(255) CHARACTER SET utf8 NOT NULL,
   `condition` tinyint(4) NOT NULL,
   `active` tinyint(4) NOT NULL DEFAULT '1',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 

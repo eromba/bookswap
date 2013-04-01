@@ -13,7 +13,7 @@
 
       <h3 class="title"><?php print $book->title;?></h3>
 
-      <h4 class="date-posted">Posted <?php print date('F j, Y', strtotime($post->postdate));?></h4>
+      <h4 class="date-posted">Posted <?php print date('F j, Y', strtotime($post->created));?></h4>
 
       <div class="details clearfix">
         <div class="fields">
