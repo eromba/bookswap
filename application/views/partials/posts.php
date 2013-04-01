@@ -27,7 +27,7 @@
           </div>
           <div class="price field">
             <span class="field-label">Price:</span>
-            <span class="field-value"><?php print $post->price; ?></span>
+            <span class="field-value">$<?php print $post->price; ?></span>
           </div>
           <div class="notes field">
             <span class="field-label">Notes:</span>
