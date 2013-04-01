@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `publisher` varchar(63) DEFAULT NULL,
   `publication_date` varchar(31) DEFAULT NULL,
   `binding` varchar(31) DEFAULT NULL,
-  `type` tinyint(4) NOT NULL DEFAULT '0',
+  `product_type` tinyint(4) NOT NULL DEFAULT '0',
   `image_url` varchar(127) DEFAULT NULL,
   `bookstore_product_id` varchar(15) DEFAULT NULL,
   `bookstore_part_number` varchar(15) DEFAULT NULL,
