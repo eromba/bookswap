@@ -18,7 +18,8 @@ class Rest extends REST_Controller {
    * @param int $pid The ID of the post to update
    */
   public function post_post($pid) {
-    $post = $this->post_model->get_posts(array('pid' => $pid));
+    $this->load->model('post_model', 'posts');
+    $post = $this->posts->get($pid);
     if ($post->uid != $this->user->uid) {
       $response = array(
         'errors' => array('You do not have permission to update this post.'),
@@ -26,7 +27,7 @@ class Rest extends REST_Controller {
       $this->response($response, 403);
     }
     $active = $this->post('active');
-    $this->post_model->update_post(array(
+    $this->posts->update(array(
       'pid' => $pid,
       'active' => ($active == 'true' || $active > 0),
     ));

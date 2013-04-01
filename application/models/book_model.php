@@ -1,88 +1,82 @@
 <?php
 
-class Book_model extends CI_Model {
+class Book_model extends BS_Model {
 
+  protected $primary_key = 'bid';
+
+  protected $required_columns = array(
+    'isbn',
+    'title',
+  );
+
+  /**
+   * Values for the "required_status" column.
+   */
   const BOOKSTORE_RECOMMENDED = 0;
   const GO_TO_CLASS_FIRST = 1;
   const RECOMMENDED = 2;
   const REQUIRED = 3;
 
   /**
-   * Retrieves books from the database.
-   *
-   * @param array $options Array of query conditions
-   * @return array result() Array of book objects, or a single book object if
-   *                        a bid or isbn is specified
+   * Values for the "product_type" column.
    */
-  public function get_books($options = array()) {
-    $valid_columns = array('bid', 'isbn');
-    foreach ($valid_columns as $column) {
-      if (isset($options[$column])) {
-        $this->db->where($column, $options[$column]);
+  const BOOK = 0;
+  const PACKAGE_COMPONENT = 1;
+  const PACKAGE = 2;
+
+  public function __construct() {
+    parent::__construct();
+    $this->load->model('post_model', 'posts');
+    $this->load->model('user_model', 'users');
+  }
+
+  public function prepare_entity(&$book) {
+    $book->user_pid = NULL;
+    $book->courses = array(
+      'Bookstore Recommended' => array(),
+      'Go To Class First' => array(),
+      'Recommended' => array(),
+      'Required' => array(),
+    );
+    $courses = $this->get_courses($book->bid);
+    foreach($courses as $course) {
+      switch ($course->required_status) {
+        case self::BOOKSTORE_RECOMMENDED:
+          $book->courses['Bookstore Recommended'][] = $course;
+          break;
+        case self::GO_TO_CLASS_FIRST:
+          $book->courses['Go To Class First'][] = $course;
+          break;
+        case self::RECOMMENDED:
+          $book->courses['Recommended'][] = $course;
+          break;
+        case self::REQUIRED:
+          $book->courses['Required'][] = $course;
+          break;
       }
     }
 
-    $query = $this->db->get('books');
-
-    $books = $query->result();
-
-    foreach ($books as &$book) {
-      $book->user_pid = NULL;
-
-
-      $book->courses = array(
-        'Bookstore Recommended' => array(),
-        'Go To Class First' => array(),
-        'Recommended' => array(),
-        'Required' => array(),
-      );
-      $courses = $this->get_courses($book->bid);
-      foreach($courses as $course) {
-        switch ($course->required_status) {
-          case self::BOOKSTORE_RECOMMENDED:
-            $book->courses['Bookstore Recommended'][] = $course;
-            break;
-          case self::GO_TO_CLASS_FIRST:
-            $book->courses['Go To Class First'][] = $course;
-            break;
-          case self::RECOMMENDED:
-            $book->courses['Recommended'][] = $course;
-            break;
-          case self::REQUIRED:
-            $book->courses['Required'][] = $course;
-            break;
-        }
-      }
-
-      $book->posts = $this->post_model->get_posts(array(
-        'bid' => $book->bid,
-        'active' => TRUE,
-        'order_by' => 'price asc',
-      ));
-      foreach ($book->posts as $post) {
-        $post->user = $this->user_model->get_users(array('uid' => $post->uid));
-        if ($this->user && ($post->user->uid == $this->user->uid)) {
-          $book->user_pid = $post->pid;
-        }
-      }
-
-      $book->num_posts = count($book->posts);
-      $book->min_student_price = $this->post_model->get_min_price($book->bid);
-      $book->min_store_price = min($book->bookstore_new_price, $book->amazon_new_price);
-      $book->num_store_offers = 0;
-      if ($book->bookstore_new_price != 0) {
-        $book->num_store_offers++;
-      }
-      if ($book->amazon_new_price != 0) {
-        $book->num_store_offers++;
+    $this->posts->order_by('price', 'asc');
+    $book->posts = $this->posts->get_many_by(array(
+      'bid' => $book->bid,
+      'active' => TRUE,
+    ));
+    foreach ($book->posts as $post) {
+      $post->user = $this->users->get($post->uid);
+      if ($this->user && ($post->user->uid == $this->user->uid)) {
+        $book->user_pid = $post->pid;
       }
     }
 
-    if (isset($options['bid']) || isset($options['isbn'])) {
-      return $books[0];
+    $book->num_posts = count($book->posts);
+    $book->min_student_price = $this->posts->get_min_price($book->bid);
+    $book->min_store_price = min($book->bookstore_new_price, $book->amazon_new_price);
+    $book->num_store_offers = 0;
+    if ($book->bookstore_new_price != 0) {
+      $book->num_store_offers++;
     }
-    else {
-      return $books;
+    if ($book->amazon_new_price != 0) {
+      $book->num_store_offers++;
     }
   }
 
@@ -113,11 +107,11 @@ class Book_model extends CI_Model {
       $this->db->join('sections_books', 'sections_books.bid = books.bid');
       $this->db->join('sections', 'sections.sid = sections_books.sid');
       $this->db->where('sections.cid', $courses[0]->cid);
-      return $this->get_books();
+      return $this->get_all();
     }
     else {
       $this->db->or_like('title', $string);
-      return $this->get_books();
+      return $this->get_all();
     }
   }
 
@@ -133,7 +127,7 @@ class Book_model extends CI_Model {
     $this->db->where("UNIX_TIMESTAMP(amazon_updated) < $one_day_ago OR amazon_updated IS NULL");
     $this->db->order_by('amazon_updated', 'asc');
     $this->db->limit(10);
-    $query = $this->db->get('books');
+    $query = $this->db->get($this->table);
     $results = $query->result();
     $isbns = array();
     foreach ($results as $result) {
@@ -147,26 +141,17 @@ class Book_model extends CI_Model {
   /**
    * Batch updates Amazon data for multiple books in the database.
    *
-   * At minimum, the $book_details array must specify the ISBNs of the books to update.
+   * At minimum, each object in $book_details must specify the ISBN of the
+   * book to update.
    *
-   * @param array $book_details Array of columns => values arrays to be saved to the database
+   * @param array $book_details Array of book details to save to the database
    * @return int affected_rows() Number of rows updated, or false on error
    */
   public function update_amazon_data($book_details) {
-    $data = array();
-    $valid_columns = array('isbn', 'title', 'edition', 'publisher', 'publication_date', 'binding', 'image_url', 'amazon_url', 'amazon_list_price', 'amazon_new_price', 'amazon_used_price');
-    foreach ($book_details as $amazon_book) {
-      $row = array();
-      foreach ($valid_columns as $column) {
-        if (isset($amazon_book[$column])) {
-          $row[$column] = $amazon_book[$column];
-        }
-      }
-      $row['amazon_updated'] = date('Y-m-d H:i:s');
-      $data[] = $row;
+    foreach ($book_details as &$book) {
+      $book['amazon_updated'] = date('Y-m-d H:i:s');
     }
-    $this->db->update_batch('books', $data, 'isbn');
-    return $this->db->affected_rows();
+    return $this->update_many($book_details, 'isbn');
   }
 
 }

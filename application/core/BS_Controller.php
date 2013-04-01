@@ -12,7 +12,13 @@ class BS_Controller extends CI_Controller {
 
   public function __construct() {
     parent::__construct();
+
     $this->config->load('bookswap');
+
+    $this->load->model('book_model', 'books');
+    $this->load->model('post_model', 'posts');
+    $this->load->model('user_model', 'users');
+
     $this->user = $this->session->userdata('bookswap_user');
 
     // Give all views access to user-related variables

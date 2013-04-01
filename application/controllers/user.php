@@ -33,7 +33,7 @@ class User extends BS_Controller {
     if ( ! $netid) {
       return FALSE;
     }
-    $user = $this->user_model->get_users(array('netid' => $netid));
+    $user = $this->users->get_by(array('netid' => $netid));
     if ( ! $user) {
       $new_user = array(
         'netid' => $netid,
@@ -41,7 +41,7 @@ class User extends BS_Controller {
         'first_name' => 'John',
       );
       $this->user_model->add_user($new_user);
-      $user = $this->user_model->get_users(array('netid' => $netid));
+      $user = $this->users->insert(array('netid' => $netid));
     }
     return $user;
   }

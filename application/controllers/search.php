@@ -36,10 +36,10 @@ class Search extends BS_Controller {
   private function fetch_books($query) {
     $isbn = $this->get_isbn($query);
     if ($isbn) {
-      $results = array( $this->book_model->get_books(array('isbn' => $isbn)) );
+      $results = $this->books->get_many_by('isbn', $isbn);
     }
     else {
-      $results = $this->book_model->get_books_by_string($query);
+      $results = $this->books->get_books_by_string($query);
     }
     return $results;
   }

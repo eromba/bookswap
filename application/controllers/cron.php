@@ -11,17 +11,18 @@ class Cron extends CI_Controller {
     }
 
     $this->config->load('bookswap');
-    $this->load->model('book_model');
-    $this->load->model('amazon_model');
   }
 
   public function update_amazon_data() {
+    $this->load->model('book_model', 'books');
+    $this->load->model('amazon_model', 'amazon');
+
     try {
       $request_limit = $this->config->item('amazon_requests_per_cron');
       for ($i = 0; $i < $request_limit; $i++) {
-        $isbns = $this->book_model->get_books_to_update();
+        $isbns = $this->books->get_books_to_update();
         if (count($isbns) > 0) {
-          $book_details = $this->amazon_model->look_up_isbns($isbns);
+          $book_details = $this->amazon->look_up_isbns($isbns);
           foreach ($isbns as $isbn) {
             if (isset($book_details[$isbn])) {
               // Update the book's title only if Amazon's title is not empty.
@@ -37,7 +38,7 @@ class Cron extends CI_Controller {
               $book_details[$isbn]['isbn'] = $isbn;
             }
           }
-          $this->book_model->update_amazon_data($book_details);
+          $this->books->update_amazon_data($book_details);
         }
         else {
           break;

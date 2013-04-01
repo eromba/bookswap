@@ -109,6 +109,6 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('book_model', 'post_model', 'user_model');
+$autoload['model'] = array();
 /* End of file autoload.php */
 /* Location: ./application/config/autoload.php */
