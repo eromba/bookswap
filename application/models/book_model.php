@@ -45,16 +45,16 @@ class Book_model extends BS_Model {
     foreach($courses as $course) {
       switch ($course->required_status) {
         case self::BOOKSTORE_RECOMMENDED:
-          $book->courses['Bookstore Recommended'][] = $course;
+          $book->courses['Bookstore Recommended'][$course->name][] = $course->section;
           break;
         case self::GO_TO_CLASS_FIRST:
-          $book->courses['Go To Class First'][] = $course;
+          $book->courses['Go To Class First'][$course->name][] = $course->section;
           break;
         case self::RECOMMENDED:
-          $book->courses['Recommended'][] = $course;
+          $book->courses['Recommended'][$course->name][] = $course->section;
           break;
         case self::REQUIRED:
-          $book->courses['Required'][] = $course;
+          $book->courses['Required'][$course->name][] = $course->section;
           break;
       }
     }
@@ -99,6 +99,8 @@ class Book_model extends BS_Model {
     $this->db->join('sections', 'sections.cid = courses.cid');
     $this->db->join('sections_books', 'sections_books.sid = sections.sid');
     $this->db->where('sections_books.bid', $bid);
+    $this->db->order_by('name', 'ASC');
+    $this->db->order_by('section', 'ASC');
     $query = $this->db->get();
     return $query->result();
   }

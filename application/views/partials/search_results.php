@@ -44,8 +44,10 @@
           <?php if ($courses) { ?>
             <?php print $course_type; ?> for:
             <ul>
-              <?php foreach ($courses as $course) { ?>
-                <li class="course"><?php print $course->name . ', Section ' . $course->section;?></li>
+              <?php foreach ($courses as $course => $sections) { ?>
+                <li class="course"><span class="code"><?php print $course; ?></span> &ndash;
+                  Section<?php print (count($sections) > 1) ? 's' : ''; ?>
+                  <?php print implode(', ', $sections); ?></li>
               <?php } ?>
             </ul>
             <?php } ?>
