@@ -435,6 +435,10 @@ a.sell-your-copy i {
   border-color: #BFE38E;
 }
 
+.store-offers .not-available {
+  color: #999;
+}
+
 .store-offers .action .btn {
   width: 145px;
 }

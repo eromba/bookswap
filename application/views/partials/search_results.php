@@ -170,12 +170,12 @@
                   <?php if ($book->bookstore_new_price) { ?>
                     <td class="new-price">$<?php print $book->bookstore_new_price; ?></td>
                   <?php } else { ?>
-                    <td class="new-price">(Not available)</td>
+                    <td class="new-price not-available">(Not available)</td>
                   <?php } ?>
                   <?php if ($book->bookstore_used_price) { ?>
                     <td class="used-price">$<?php print $book->bookstore_used_price; ?></td>
                   <?php } else { ?>
-                    <td class="used-price">(Not available)</td>
+                    <td class="used-price not-available">(Not available)</td>
                   <?php } ?>
                   <?php if ($book->bookstore_new_price || $book->bookstore_used_price) { ?>
                     <td class="action">
@@ -192,7 +192,7 @@
                   <?php if ($book->amazon_new_price != 0) { ?>
                     <td class="new-price">$<?php print $book->amazon_new_price; ?></td>
                   <?php } else { ?>
-                    <td class="new-price">(Not available)</td>
+                    <td class="new-price not-available">(Not available)</td>
                   <?php } ?>
                   <td class="used-price"></td>
                   <?php if ($book->amazon_new_price || $book->amazon_used_price) { ?>
