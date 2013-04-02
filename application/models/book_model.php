@@ -73,14 +73,23 @@ class Book_model extends BS_Model {
 
     $book->num_posts = count($book->posts);
     $book->min_student_price = $this->posts->get_min_price($book->bid);
-    $book->min_store_price = min($book->bookstore_new_price, $book->amazon_new_price);
+
     $book->num_store_offers = 0;
-    if ($book->bookstore_new_price != 0) {
+    $all_store_offers = array();
+    $bookstore_offers = array();
+    if ($book->bookstore_new_price) {
       $book->num_store_offers++;
+      $all_store_offers[] = $bookstore_offers[] = $book->bookstore_new_price;
     }
-    if ($book->amazon_new_price != 0) {
+    if ($book->bookstore_used_price) {
+      $all_store_offers[] = $bookstore_offers[] = $book->bookstore_used_price;
+    }
+    if ($book->amazon_new_price) {
       $book->num_store_offers++;
+      $all_store_offers[] = $book->amazon_new_price;
     }
+    $book->min_store_price = ($all_store_offers) ? min($all_store_offers) : NULL;
+    $book->min_bookstore_price = ($bookstore_offers) ? min($bookstore_offers) : NULL;
   }
 
   private function get_courses($bid) {

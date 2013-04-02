@@ -70,7 +70,7 @@ print form_open(base_url(uri_string()), array(
     </tr>
     <tr>
       <td class="vendor"><?php print $bookstore_name; ?></td>
-      <td class="price"><?php print ($book->bookstore_new_price) ? '$' . $book->bookstore_new_price : '(Unavailable)'?></td>
+      <td class="price"><?php print ($book->min_bookstore_price) ? '$' . $book->min_bookstore_price : '(Unavailable)'?></td>
     </tr>
     <tr>
       <td class="vendor">Amazon.com</td>
