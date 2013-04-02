@@ -28,6 +28,12 @@ class BS_Model extends CI_Model {
   protected $primary_key;
 
   /**
+   * Whether the primary key is an AUTO_INCREMENT value.
+   * @var boolean
+   */
+  protected $auto_primary_key;
+
+  /**
    * Protected, non-modifiable columns
    * @var array
    */
@@ -38,6 +44,12 @@ class BS_Model extends CI_Model {
    * @var array
    */
   protected $required_columns = array();
+
+  /**
+   * Columns that may be specified when creating or updating an entity.
+   * @var array
+   */
+  protected $mutable_columns = array();
 
   /**
    * Column to be used for keys in the result array of the next "get" query.
@@ -63,6 +75,12 @@ class BS_Model extends CI_Model {
         'created',
       );
     }
+
+    if ($this->primary_key !== NULL) {
+      $this->auto_primary_key = ! in_array($this->primary_key, $this->required_columns);
+      $columns = $this->db->list_fields($this->table);
+      $this->mutable_columns = array_diff($columns, $this->protected_columns);
+    }
   }
 
   /* --------------------------------------------------------------
@@ -86,7 +104,7 @@ class BS_Model extends CI_Model {
    * @return int insert_id() The ID of the last-inserted entity, or FALSE on error
    */
   public function insert_many($entities) {
-    $valid_entities = $this->validate($entities, TRUE, TRUE);
+    $valid_entities = $this->validate($entities, TRUE, $this->auto_primary_key);
     if ($valid_entities) {
       $this->db->insert_batch($this->table, $valid_entities);
       return $this->db->insert_id();
@@ -319,7 +337,7 @@ class BS_Model extends CI_Model {
    *
    * @param array $entities Entities to validate
    * @param boolean $check_required Whether or not to check for required fields
-   * @param boolean $unset_primary_key Whether or not to protect the primary key
+   * @param boolean $protect_primary_key Whether or not to protect the primary key
    * @return array The given entities with protected columns removed,
    *               or FALSE if required columns are not specified
    */
@@ -331,14 +349,11 @@ class BS_Model extends CI_Model {
       if ($check_required && array_diff($this->required_columns, array_keys($entity))) {
         return FALSE;
       }
-      // Remove protected columns.
+      // Remove invalid / protected columns.
       if ($protect_primary_key) {
         unset($entity[$this->primary_key]);
       }
-      foreach($this->protected_columns as $column) {
-        unset($entity[$column]);
-      }
-      $valid_entities[] = $entity;
+      $valid_entities[] = array_intersect_key($entity, array_flip($this->mutable_columns));
     }
     return $valid_entities;
   }
