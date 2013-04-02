@@ -124,7 +124,7 @@ class Book_model extends BS_Model {
     $this->db->select('isbn');
     $this->db->where('isbn IS NOT NULL');
     $one_day_ago = time() - (24 * 60 * 60);
-    $this->db->where("UNIX_TIMESTAMP(amazon_updated) < $one_day_ago OR amazon_updated IS NULL");
+    $this->db->where("(UNIX_TIMESTAMP(amazon_updated) < $one_day_ago OR amazon_updated IS NULL)");
     $this->db->order_by('amazon_updated', 'asc');
     $this->db->limit(10);
     $query = $this->db->get($this->table);
