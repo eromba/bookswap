@@ -4,9 +4,12 @@ class Book_model extends BS_Model {
 
   protected $primary_key = 'bid';
 
+  // Surprisingly, some books listed on bookstore websites DO NOT have ISBNs,
+  // but all books DO have a bookstore product ID. We also require books to have
+  // a title so they can be displayed meaningfully in the UI.
   protected $required_columns = array(
-    'isbn',
     'title',
+    'bookstore_id',
   );
 
   /**

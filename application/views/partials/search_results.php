@@ -32,10 +32,12 @@
               <span class="field-value"><?php print $book->publisher;?></span>
             </div>
           <?php } ?>
+          <?php if ($book->isbn) { ?>
           <div class="isbn field">
             <span class="field-label">ISBN:</span>
             <span class="field-value"><?php print $book->isbn;?></span>
           </div>
+          <?php } ?>
         </div>
         <div class="courses">
           <?php foreach ($book->courses as $course_type => $courses) { ?>
