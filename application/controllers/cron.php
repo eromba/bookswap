@@ -13,6 +13,9 @@ class Cron extends CI_Controller {
     $this->config->load('bookswap');
   }
 
+  /**
+   * Updates book details using the Amazon Product Advertising API.
+   */
   public function update_amazon_data() {
     $this->load->model('book_model', 'books');
     $this->load->model('amazon_model', 'amazon');
@@ -43,6 +46,29 @@ class Cron extends CI_Controller {
         else {
           break;
         }
+      }
+    }
+    catch (Exception $e) {
+      log_message('error', $e->getMessage());
+    }
+  }
+
+  /**
+   * Scrapes the bookstore website for course data and textbook requirements.
+   */
+  public function update_bookstore_data() {
+    $this->load->model('term_model', 'terms');
+
+    try {
+      $scrape_stats = $this->terms->get_scrape_stats();
+
+      $scrape_in_progress = $scrape_stats['scrape_in_progress'];
+      $bookstore_data_ttl = $this->config->item('bookstore_data_ttl');
+      $scrape_is_due = ($scrape_stats['time_since_last_scrape'] > $bookstore_data_ttl);
+      $db_is_empty = ($scrape_stats['num_entities'] == 0);
+
+      if ($scrape_in_progress || $scrape_is_due || $db_is_empty) {
+        $this->terms->scrape_next();
       }
     }
     catch (Exception $e) {

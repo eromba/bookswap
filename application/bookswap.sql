@@ -1,5 +1,5 @@
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
+SET time_zone = "+00:00";
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `books` (
   `binding` varchar(31) DEFAULT NULL,
   `product_type` tinyint(4) NOT NULL DEFAULT '0',
   `image_url` varchar(127) DEFAULT NULL,
-  `bookstore_product_id` varchar(15) DEFAULT NULL,
+  `bookstore_id` varchar(15) DEFAULT NULL,
   `bookstore_part_number` varchar(15) DEFAULT NULL,
   `bookstore_new_price` decimal(5,2) DEFAULT NULL,
   `bookstore_used_price` decimal(5,2) DEFAULT NULL,
@@ -27,8 +27,11 @@ CREATE TABLE IF NOT EXISTS `books` (
   `amazon_new_price` decimal(5,2) DEFAULT NULL,
   `amazon_used_price` decimal(5,2) DEFAULT NULL,
   `amazon_updated` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`bid`),
-  UNIQUE KEY `ISBN` (`isbn`)
+  UNIQUE KEY `bookstore_product_id` (`bookstore_id`),
+  UNIQUE KEY `isbn` (`isbn`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 CREATE TABLE IF NOT EXISTS `courses` (
@@ -37,6 +40,9 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `code` varchar(15) NOT NULL,
   `name` varchar(31) NOT NULL,
   `bookstore_id` int(11) DEFAULT NULL,
+  `scrape_status` tinyint(4) NOT NULL,
+  `scraped` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`cid`),
   UNIQUE KEY `Department_Course` (`did`,`bookstore_id`),
@@ -48,6 +54,9 @@ CREATE TABLE IF NOT EXISTS `departments` (
   `tid` int(11) unsigned NOT NULL,
   `code` varchar(15) NOT NULL,
   `bookstore_id` int(11) NOT NULL,
+  `scrape_status` tinyint(4) NOT NULL,
+  `scraped` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`did`),
   UNIQUE KEY `Term_Department` (`tid`,`code`),
@@ -63,6 +72,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `edition` varchar(255) CHARACTER SET utf8 NOT NULL,
   `condition` tinyint(4) NOT NULL,
   `active` tinyint(4) NOT NULL DEFAULT '1',
+  `updated` timestamp NULL DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
@@ -72,6 +82,9 @@ CREATE TABLE IF NOT EXISTS `sections` (
   `cid` int(11) unsigned NOT NULL,
   `code` varchar(15) NOT NULL,
   `bookstore_id` varchar(15) NOT NULL,
+  `scrape_status` tinyint(4) NOT NULL,
+  `scraped` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`sid`),
   UNIQUE KEY `Course_Class` (`cid`,`bookstore_id`),
@@ -102,6 +115,11 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 CREATE TABLE IF NOT EXISTS `terms` (
   `tid` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(15) NOT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  `bookstore_id` int(11) NOT NULL,
+  `scrape_status` tinyint(4) NOT NULL,
+  `scraped` timestamp NULL DEFAULT NULL,
+  `updated` timestamp NULL DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`tid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
@@ -114,3 +132,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`uid`),
   UNIQUE KEY `netid` (`netid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `courses`
+  ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`did`) REFERENCES `departments` (`did`) ON DELETE CASCADE;
+
+ALTER TABLE `departments`
+  ADD CONSTRAINT `departments_ibfk_1` FOREIGN KEY (`tid`) REFERENCES `terms` (`tid`) ON DELETE CASCADE;
+
+ALTER TABLE `sections`
+  ADD CONSTRAINT `sections_ibfk_1` FOREIGN KEY (`cid`) REFERENCES `courses` (`cid`) ON DELETE CASCADE;
+
+ALTER TABLE `sections_books`
+  ADD CONSTRAINT `sections_books_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `sections` (`sid`) ON DELETE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

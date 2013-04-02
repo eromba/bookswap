@@ -38,6 +38,18 @@ $config['amazon_requests_per_cron'] = 5;
 
 /*
 |--------------------------------------------------------------------------
+| Bookstore Data Time-To-Live
+|--------------------------------------------------------------------------
+|
+| The number of seconds between when the last scrape of the bookstore
+| website finishes and the next scrape begins.
+|
+|
+*/
+$config['bookstore_data_ttl'] = 60 * 60 * 24;
+
+/*
+|--------------------------------------------------------------------------
 | Book Conditions
 |--------------------------------------------------------------------------
 |

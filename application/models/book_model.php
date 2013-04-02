@@ -157,4 +157,94 @@ class Book_model extends BS_Model {
     return $this->update_many($book_details, 'isbn');
   }
 
+  /**
+   * Scrapes books from the bookstore website for the given sections.
+   *
+   * @see Section_model::scrape_children()
+   *
+   * @param array $section_ids Array of bookstore IDs for the sections to scrape
+   * @return array Array of book objects cast as arrays
+   */
+  public function scrape($section_ids) {
+    return $this->bookstore->get_books($section_ids);
+  }
+
+  /**
+   * Saves scraped books to the database.
+   *
+   * @see Section_model::scrape_children()
+   *
+   * @param array $scraped_entities The scraped book arrays to save
+   * @return array The books that are saved in the database,
+   *               including their new or existing "bid" values
+   */
+  public function save_scraped_entities($scraped_entities) {
+    // Fetch books that match the product IDs of the scraped books.
+    $scraped_ids = array();
+    $scraped_isbns = array();
+    foreach ($scraped_entities as $book)  {
+      $scraped_ids[] = $book['bookstore_id'];
+      if (isset($book['isbn'])) {
+        $scraped_isbns[] = $book['isbn'];
+      }
+    }
+    $existing_books_by_id = array();
+    if ($scraped_ids) {
+      $existing_books_by_id = $this->with_result_key('bookstore_id')
+                             ->get_many_by(array('bookstore_id' => $scraped_ids));
+    }
+    $existing_books_by_isbn = array();
+    if ($scraped_isbns) {
+      $existing_books_by_isbn = $this->with_result_key('isbn')
+                             ->get_many_by(array('isbn' => $scraped_isbns));
+    }
+
+    $processed_ids = array();
+    $saved_books = array();
+    foreach ($scraped_entities as $book) {
+      $product_id = $book['bookstore_id'];
+      $existing_book = NULL;
+      if (isset($existing_books_by_id[$product_id])) {
+        $existing_book = $existing_books_by_id[$product_id];
+      }
+      else if (isset($book['isbn']) && isset($existing_books_by_isbn[$book['isbn']])) {
+        $existing_book = $existing_books_by_isbn[$book['isbn']];
+      }
+      if ($existing_book) {
+        $book['bid'] = $existing_book->bid;
+        $saved_books[] = (object)$book;
+
+        // If this is the first time we have processed this book during
+        // this scrape operation, update its bookstore data in the database.
+        if ( ! isset($processed_ids[$product_id])) {
+          $book_prices = array(
+            'bid' => $book['bid'],
+            'bookstore_id' => $book['bookstore_id'],
+            'bookstore_part_number' => $book['bookstore_part_number'],
+            'bookstore_used_price' => $book['bookstore_used_price'],
+            'bookstore_new_price' => $book['bookstore_new_price'],
+            'updated' => date('Y-m-d h:i:s'),
+          );
+          $this->update($book_prices);
+          $processed_ids[$product_id] = TRUE;
+        }
+      }
+      else {
+        $bid = $this->insert($book);
+        if ($bid) {
+          $book['bid'] = $bid;
+          $saved_books[] = (object)$book;
+
+          // Mark this book as being processed and add it to $existing_books
+          // to prevent it from being inserted / updated again during this
+          // scrape operation.
+          $existing_books_by_id[$product_id] = (object)$book;
+          $processed_ids[$product_id] = TRUE;
+        }
+      }
+    }
+
+    return $saved_books;
+  }
+
 }
