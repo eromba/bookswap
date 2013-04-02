@@ -60,15 +60,37 @@ class Cron extends CI_Controller {
     $this->load->model('term_model', 'terms');
 
     try {
-      $scrape_stats = $this->terms->get_scrape_stats();
+      $num_requests = $this->config->item('bookstore_requests_per_minute');
+      $time_division = (60 / $num_requests); // seconds
+      $time1 = microtime(true);
+      for ($i = 0; $i < $num_requests; $i++) {
+        $scrape_stats = $this->terms->get_scrape_stats();
 
-      $scrape_in_progress = $scrape_stats['scrape_in_progress'];
-      $bookstore_data_ttl = $this->config->item('bookstore_data_ttl');
-      $scrape_is_due = ($scrape_stats['time_since_last_scrape'] > $bookstore_data_ttl);
-      $db_is_empty = ($scrape_stats['num_entities'] == 0);
+        $scrape_in_progress = $scrape_stats['scrape_in_progress'];
+        $bookstore_data_ttl = $this->config->item('bookstore_data_ttl');
+        $scrape_is_due = ($scrape_stats['time_since_last_scrape'] > $bookstore_data_ttl);
+        $db_is_empty = ($scrape_stats['num_entities'] == 0);
 
-      if ($scrape_in_progress || $scrape_is_due || $db_is_empty) {
-        $this->terms->scrape_next();
+        if ($scrape_in_progress || $scrape_is_due || $db_is_empty) {
+          $this->terms->scrape_next();
+        }
+        else {
+          break;
+        }
+
+        $time2 = microtime(true);
+        $difference = ($time2 - $time1); // seconds
+        if ($difference >= $time_division) {
+          // Scraping took longer than the allotted time.
+          // Loop immediately.
+          $time1 = $time2;
+        }
+        else if (($i + 1) < $num_requests) {
+          // Scraping finished before the time division was reached.
+          // Sleep to make up the difference.
+          usleep(($time_division - $difference) * 1000000);
+          $time1 = microtime(true);
+        }
       }
     }
     catch (Exception $e) {

@@ -50,6 +50,17 @@ $config['bookstore_data_ttl'] = 60 * 60 * 24;
 
 /*
 |--------------------------------------------------------------------------
+| Bookstore Request Rate
+|--------------------------------------------------------------------------
+|
+| The number of requests to send to the bookstore website per minute,
+| provided that Cron::update_bookstore_data() is invoked every minute.
+|
+*/
+$config['bookstore_requests_per_minute'] = 10;
+
+/*
+|--------------------------------------------------------------------------
 | Book Conditions
 |--------------------------------------------------------------------------
 |
