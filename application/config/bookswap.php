@@ -21,6 +21,7 @@ $config['ui_strings'] = array(
   'organization_url'  => 'http://www.example.com/',
   'bookstore_name'    => 'Campus Bookstore',
   'bookstore_url'     => 'http://www.example.com/',
+  'username_field'    => 'NetID',
 );
 
 /*

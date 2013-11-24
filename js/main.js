@@ -86,7 +86,7 @@ $(function() {
   });
 
   $('#login-modal').on('shown', function() {
-    $('#netid-field').focus();
+    $('#username-field').focus();
   });
 
   $('.login.btn').click(function(event) {

@@ -10,8 +10,8 @@
           'id' => 'login-form',
         ));
       ?>
-        <label for="netid-field">NetID</label>
-        <input id="netid-field" type="text" name="username" placeholder="NetID" />
+        <label for="username-field"><?php print $username_field; ?></label>
+        <input id="username-field" type="text" name="username" placeholder="<?php print $username_field; ?>" />
         <label for="password-field">Password</label>
         <input id="password-field" type="password" name="password" placeholder="Password" />
       </form>

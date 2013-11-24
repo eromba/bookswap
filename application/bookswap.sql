@@ -126,11 +126,11 @@ CREATE TABLE IF NOT EXISTS `terms` (
 
 CREATE TABLE IF NOT EXISTS `users` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `netid` varchar(7) CHARACTER SET utf8 NOT NULL,
+  `username` varchar(7) CHARACTER SET utf8 NOT NULL,
   `email` varchar(63) CHARACTER SET utf8 DEFAULT NULL,
   `first_name` varchar(31) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`uid`),
-  UNIQUE KEY `netid` (`netid`)
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

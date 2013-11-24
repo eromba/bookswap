@@ -9,12 +9,12 @@
     <ol>
       <li>Search for the book you want to buy.</li>
       <li>Compare book prices from other students, the university bookstore, and Amazon.com.</li>
-      <li>To buy a book from another student, <a href="<?php print base_url('login'); ?>">log in with your NetID</a> and click on the "Contact Seller" button to send that student an email.</li>
+      <li>To buy a book from another student, <a href="<?php print base_url('login'); ?>">log in with your <?php print $username_field; ?></a> and click on the "Contact Seller" button to send that student an email.</li>
       <li>Start a conversation with the seller, arrange the details, and get your book!</li>
     </ol>
     <h4>Sell a Book</h4>
     <ol>
-      <li><a href="<?php print base_url('login'); ?>">Log in with your NetID</a>.</li>
+      <li><a href="<?php print base_url('login'); ?>">Log in with your <?php print $username_field; ?></a>.</li>
       <li>Search for the book you want to sell.</li>
       <li>Click the "Sell Your Copy" button next to the appropriate book.</li>
       <li>Enter the required information and click "Submit".</li>
